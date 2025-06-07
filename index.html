@@ -111,7 +111,7 @@
     <input type="password" id="password" placeholder="كلمة المرور" autocomplete="new-password" required />
     <button id="registerBtn">إنشاء حساب</button>
     <div id="message"></div>
-    <p class="login-text">لديك حساب؟ <a href="retalk.html">تسجيل الدخول</a></p>
+    <p class="login-text">لديك حساب؟ <a href="home.html">تسجيل الدخول</a></p>
   </div>
 
   <script type="module">
@@ -152,10 +152,7 @@
       try {
         await createUserWithEmailAndPassword(auth, email, password);
         messageDiv.style.color = '#10b981';
-        messageDiv.textContent = 'تم إنشاء الحساب بنجاح! جاري التحويل...';
-        setTimeout(() => {
-          window.location.href = 'retalk.html';
-        }, 2000);
+        messageDiv.textContent = 'تم إنشاء الحساب بنجاح!';
       } catch (error) {
         messageDiv.style.color = '#ef4444';
         if (error.code === 'auth/email-already-in-use') {

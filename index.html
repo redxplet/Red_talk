@@ -4,338 +4,162 @@
   <meta charset="UTF-8" />
   <title>تسجيل الدخول - RED TALK</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-
-    * {
-      box-sizing: border-box;
-    }
-
+    * { box-sizing: border-box; }
     body {
       margin: 0;
       font-family: 'Cairo', sans-serif;
-      background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+      background: linear-gradient(135deg, #5865f2, #4752c4);
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       color: #f0f0f0;
-      user-select: none;
       padding: 20px;
     }
-
-    .container {
+    .login-container {
       background-color: #2f3136;
-      padding: 50px 45px 60px;
+      padding: 40px;
       border-radius: 20px;
       width: 100%;
       max-width: 400px;
-      box-shadow:
-        0 4px 15px rgba(0,0,0,0.5),
-        inset 0 0 10px rgba(255,255,255,0.1);
-      transition: box-shadow 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
       text-align: center;
     }
-    .container:hover {
-      box-shadow:
-        0 6px 25px rgba(0,0,0,0.7),
-        inset 0 0 15px rgba(255,255,255,0.15);
-    }
-
     .logo {
       font-weight: 900;
       font-size: 38px;
       color: #85a5ff;
       margin-bottom: 25px;
-      letter-spacing: 3px;
-      user-select: text;
-      font-family: 'Cairo', sans-serif;
-      text-shadow: 0 0 12px #7f8fff, 0 0 20px #c3d0ff;
-      transition: color 0.3s ease;
+      text-shadow: 0 0 12px #7f8fff;
     }
-    .logo:hover {
-      color: #a5b9ff;
-    }
-
     h2 {
-      margin: 0 0 35px;
-      font-weight: 700;
-      font-size: 28px;
-      letter-spacing: 1.3px;
-      color: #e0e0e0;
-      user-select: text;
+      font-size: 24px;
+      margin-bottom: 20px;
     }
-
     .input-group {
-      position: relative;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       text-align: right;
     }
-
-    input[type="text"], input[type="password"] {
+    input {
       width: 100%;
-      padding: 14px 50px 14px 15px;
+      padding: 14px;
       border: none;
-      border-radius: 12px;
-      background-color: #40444b;
-      color: #dcdcdc;
-      font-size: 16px;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-      caret-color: #5865f2;
-    }
-
-    input[type="text"]::placeholder,
-    input[type="password"]::placeholder {
-      color: #a0a0a0;
-    }
-
-    input[type="text"]:focus, input[type="password"]:focus {
-      outline: none;
-      background-color: #5865f2;
-      box-shadow: 0 0 10px #5865f2;
+      border-radius: 10px;
+      background: #40444b;
       color: #fff;
     }
-
-    .input-group svg {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      fill: #999;
-      width: 24px;
-      height: 24px;
-      pointer-events: none;
-      transition: fill 0.3s ease;
+    .strength {
+      margin-top: 5px;
+      font-size: 13px;
+      text-align: right;
     }
-
-    input[type="text"]:focus + svg,
-    input[type="password"]:focus + svg {
-      fill: #e0e0e0;
-    }
-
-    .toggle-password {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      color: #999;
-      font-size: 20px;
-      user-select: none;
-      transition: color 0.3s ease;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .toggle-password:hover {
-      color: #e0e0e0;
-    }
-    .toggle-password:active {
-      transform: translateY(calc(-50% + 2px));
-      color: #c3d0ff;
-    }
-
-    button.login-btn {
+    .login-btn {
       width: 100%;
-      padding: 15px 0;
+      padding: 12px;
       border: none;
-      border-radius: 30px;
+      border-radius: 20px;
       background: #5865f2;
-      color: white;
-      font-size: 18px;
-      font-weight: 700;
+      color: #fff;
+      font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 6px 15px rgba(88,101,242,0.6);
-      transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
-      user-select: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      margin-top: 10px;
     }
-    button.login-btn:hover {
-      background: #4752c4;
-      box-shadow: 0 8px 25px rgba(71,82,196,0.8);
-    }
-    button.login-btn:active {
-      transform: scale(0.95);
-      box-shadow: 0 5px 12px rgba(71,82,196,0.9);
-    }
-
-    button.login-btn svg {
-      width: 22px;
-      height: 22px;
-      fill: white;
-    }
-
-    .signup-link {
-      margin-top: 25px;
+    .signup-text {
+      margin-top: 15px;
       font-size: 14px;
-      color: #bbb;
-      user-select: text;
     }
-    .signup-link a {
+    .signup-text a {
       color: #85a5ff;
       text-decoration: none;
-      font-weight: 600;
-      cursor: pointer;
-      transition: color 0.3s ease, text-decoration 0.3s ease;
+      font-weight: bold;
     }
-    .signup-link a:hover,
-    .signup-link a:focus {
-      color: #c3d0ff;
-      text-decoration: underline;
-    }
-
-    .error-message {
-      color: #ff6b6b;
-      font-size: 13px;
-      margin-top: -18px;
-      margin-bottom: 18px;
-      text-align: right;
-      user-select: none;
-      display: none;
-    }
-
-    @media (max-width: 480px) {
-      .container {
-        padding: 40px 30px 50px;
-        width: 100%;
-      }
+    .message {
+      margin-top: 10px;
+      font-size: 15px;
+      color: #9aff9a;
     }
   </style>
 </head>
 <body>
-
-  <main class="container" role="main" aria-label="صفحة تسجيل الدخول">
-    <div class="logo" aria-label="شعار RED TALK">RED TALK</div>
+  <main class="login-container">
+    <div class="logo">RED TALK</div>
     <h2>تسجيل الدخول</h2>
 
     <div class="input-group">
-      <input
-        type="text"
-        id="username"
-        aria-label="اسم المستخدم"
-        placeholder="اسم المستخدم"
-        autocomplete="username"
-        required
-      />
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-      </svg>
-      <div id="username-error" class="error-message">يرجى إدخال اسم المستخدم</div>
+      <input type="text" id="email" placeholder="البريد الإلكتروني" autocomplete="email" />
     </div>
 
-    <div class="input-group" style="position: relative;">
-      <input
-        type="password"
-        id="password"
-        aria-label="كلمة المرور"
-        placeholder="كلمة المرور"
-        autocomplete="current-password"
-        required
-      />
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6-5v-3a6 6 0 1 0-12 0v3H4v10h16V12h-2zm-8-3a4 4 0 1 1 8 0v3H10v-3z"/>
-      </svg>
-      <button
-        type="button"
-        class="toggle-password"
-        aria-label="إظهار أو إخفاء كلمة المرور"
-        onclick="togglePassword()"
-        tabindex="-1"
-        title="إظهار/إخفاء كلمة المرور"
-      >👁️</button>
-      <div id="password-error" class="error-message">يرجى إدخال كلمة المرور</div>
+    <div class="input-group">
+      <input type="password" id="password" placeholder="كلمة المرور" autocomplete="current-password" oninput="checkStrength()" />
+      <div class="strength" id="strength-text"></div>
     </div>
 
-    <button id="login-btn" class="login-btn" aria-label="تسجيل الدخول">
-      تسجيل الدخول
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M10 17l5-5-5-5v10z"/>
-      </svg>
-    </button>
-
-    <p class="signup-link">
-      لا تملك حساب؟ <a href="signin.html" tabindex="0">إنشاء حساب</a>
-    </p>
+    <button class="login-btn" onclick="login()">تسجيل الدخول</button>
+    <p class="signup-text">ليس لديك حساب؟ <a href="signin.html">إنشاء حساب</a></p>
+    <div id="message" class="message"></div>
   </main>
 
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
   <script>
-    // تهيئة Firebase - استبدل بالقيم الخاصة بك
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyCoLrZOjyIn_KbSMP35RAPzlnCpNQzfPl4",
+      authDomain: "red-talk-2a888.firebaseapp.com",
+      projectId: "red-talk-2a888",
+      storageBucket: "red-talk-2a888.appspot.com",
+      messagingSenderId: "315227387862",
+      appId: "1:315227387862:web:61e9b99c1ac40d0669d677"
     };
+
     firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
 
-    // تفعيل/إخفاء كلمة المرور
-    function togglePassword() {
-      const passwordInput = document.getElementById('password');
-      if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-      } else {
-        passwordInput.type = "password";
-      }
+    function checkStrength() {
+      const password = document.getElementById("password").value;
+      const strengthText = document.getElementById("strength-text");
+
+      let strength = 0;
+      if (password.length >= 6) strength++;
+      if (password.match(/[a-z]/)) strength++;
+      if (password.match(/[A-Z]/)) strength++;
+      if (password.match(/[0-9]/)) strength++;
+      if (password.match(/[\W_]/)) strength++;
+
+      let message = "";
+      if (strength <= 2) message = "كلمة المرور ضعيفة";
+      else if (strength === 3) message = "متوسطة";
+      else if (strength === 4) message = "جيدة";
+      else message = "ممتازة";
+
+      strengthText.textContent = message;
+      strengthText.style.color = strength <= 2 ? "red" : strength === 3 ? "orange" : strength === 4 ? "#85ff85" : "#4ff";
     }
 
-    // التحقق من المدخلات
-    function validateInputs(username, password) {
-      let valid = true;
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const messageBox = document.getElementById("message");
 
-      const usernameError = document.getElementById('username-error');
-      const passwordError = document.getElementById('password-error');
-
-      if (!username.trim()) {
-        usernameError.style.display = 'block';
-        valid = false;
-      } else {
-        usernameError.style.display = 'none';
-      }
-
-      if (!password.trim()) {
-        passwordError.style.display = 'block';
-        passwordError.textContent = 'يرجى إدخال كلمة المرور';
-        valid = false;
-      } else {
-        passwordError.style.display = 'none';
-      }
-
-      return valid;
-    }
-
-    // حدث الضغط على زر تسجيل الدخول
-    document.getElementById('login-btn').addEventListener('click', () => {
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-
-      if (!validateInputs(username, password)) {
+      if (!email || !password) {
+        messageBox.textContent = "يرجى ملء كل الحقول";
+        messageBox.style.color = "red";
         return;
       }
 
-      // تسجيل الدخول مع البريد المُركب من اسم المستخدم + دومين وهمي
-      auth.signInWithEmailAndPassword(username + '@redtalk.fake', password)
-        .then((userCredential) => {
-          // تسجيل الدخول ناجح
-          window.location.href = 'index.html';
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .then(() => {
+          messageBox.textContent = "مرحباً بعودتك!";
+          messageBox.style.color = "#9aff9a";
+          setTimeout(() => {
+            window.location.href = "signin.html";
+          }, 1500);
         })
         .catch((error) => {
-          const passwordError = document.getElementById('password-error');
-          passwordError.style.display = 'block';
-          passwordError.textContent = error.message;
+          messageBox.textContent = "حدث خطأ: " + error.message;
+          messageBox.style.color = "red";
         });
-    });
+    }
   </script>
-
 </body>
 </html>

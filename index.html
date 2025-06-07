@@ -1,165 +1,175 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <title>تسجيل الدخول - RED TALK</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <title>إنشاء حساب - RED TALK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
+    * {
+      box-sizing: border-box;
       font-family: 'Cairo', sans-serif;
-      background: linear-gradient(135deg, #5865f2, #4752c4);
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: linear-gradient(135deg, #3b82f6, #9333ea);
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #f0f0f0;
-      padding: 20px;
+      color: white;
+      padding: 1rem;
     }
-    .login-container {
-      background-color: #2f3136;
-      padding: 40px;
-      border-radius: 20px;
+    .container {
+      background: #111827;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      padding: 2rem;
       width: 100%;
-      max-width: 400px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      max-width: 380px;
       text-align: center;
+      animation: fadeIn 0.8s ease forwards;
     }
-    .logo {
-      font-weight: 900;
-      font-size: 38px;
-      color: #85a5ff;
-      margin-bottom: 25px;
-      text-shadow: 0 0 12px #7f8fff;
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
-    h2 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    .input-group {
-      margin-bottom: 20px;
-      text-align: right;
+    h1 {
+      margin-bottom: 1.8rem;
+      font-weight: 700;
+      font-size: 2rem;
+      color: #f9fafb;
+      letter-spacing: 0.04em;
     }
     input {
       width: 100%;
-      padding: 14px;
+      padding: 12px 14px;
+      margin-bottom: 1.2rem;
+      border-radius: 8px;
       border: none;
-      border-radius: 10px;
-      background: #40444b;
-      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: box-shadow 0.3s ease;
     }
-    .strength {
-      margin-top: 5px;
-      font-size: 13px;
-      text-align: right;
+    input:focus {
+      box-shadow: 0 0 8px #3b82f6;
+      background-color: #1f2937;
+      color: white;
     }
-    .login-btn {
+    button {
       width: 100%;
-      padding: 12px;
+      padding: 12px 0;
+      border-radius: 8px;
       border: none;
-      border-radius: 20px;
-      background: #5865f2;
-      color: #fff;
-      font-weight: bold;
+      background-color: #3b82f6;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: white;
       cursor: pointer;
-      margin-top: 10px;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      user-select: none;
     }
-    .signup-text {
-      margin-top: 15px;
-      font-size: 14px;
+    button:hover {
+      background-color: #2563eb;
+      transform: scale(1.03);
     }
-    .signup-text a {
-      color: #85a5ff;
+    button:active {
+      transform: scale(0.97);
+    }
+    #message {
+      margin-top: 1rem;
+      min-height: 1.4rem;
+      font-weight: 600;
+    }
+    .login-text {
+      margin-top: 1.4rem;
+      font-size: 0.95rem;
+    }
+    .login-text a {
+      color: #60a5fa;
+      font-weight: 700;
       text-decoration: none;
-      font-weight: bold;
+      transition: text-decoration 0.2s ease;
     }
-    .message {
-      margin-top: 10px;
-      font-size: 15px;
-      color: #9aff9a;
+    .login-text a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-  <main class="login-container">
-    <div class="logo">RED TALK</div>
-    <h2>تسجيل الدخول</h2>
 
-    <div class="input-group">
-      <input type="text" id="email" placeholder="البريد الإلكتروني" autocomplete="email" />
-    </div>
+  <div class="container">
+    <h1>إنشاء حساب - RED TALK</h1>
+    <input type="email" id="email" placeholder="البريد الإلكتروني" autocomplete="email" required />
+    <input type="password" id="password" placeholder="كلمة المرور" autocomplete="new-password" required />
+    <button id="registerBtn">إنشاء حساب</button>
+    <div id="message"></div>
+    <p class="login-text">لديك حساب؟ <a href="retalk.html">تسجيل الدخول</a></p>
+  </div>
 
-    <div class="input-group">
-      <input type="password" id="password" placeholder="كلمة المرور" autocomplete="current-password" oninput="checkStrength()" />
-      <div class="strength" id="strength-text"></div>
-    </div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-    <button class="login-btn" onclick="login()">تسجيل الدخول</button>
-    <p class="signup-text">ليس لديك حساب؟ <a href="signin.html">إنشاء حساب</a></p>
-    <div id="message" class="message"></div>
-  </main>
-
-  <script>
     const firebaseConfig = {
       apiKey: "AIzaSyCoLrZOjyIn_KbSMP35RAPzlnCpNQzfPl4",
       authDomain: "red-talk-2a888.firebaseapp.com",
+      databaseURL: "https://red-talk-2a888-default-rtdb.firebaseio.com",
       projectId: "red-talk-2a888",
       storageBucket: "red-talk-2a888.appspot.com",
-      messagingSenderId: "315227387862",
-      appId: "1:315227387862:web:61e9b99c1ac40d0669d677"
+      messagingSenderId: "1234567890",
+      appId: "1:1234567890:web:abcdef123456"
     };
 
-    firebase.initializeApp(firebaseConfig);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-    function checkStrength() {
-      const password = document.getElementById("password").value;
-      const strengthText = document.getElementById("strength-text");
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const registerBtn = document.getElementById('registerBtn');
+    const messageDiv = document.getElementById('message');
 
-      let strength = 0;
-      if (password.length >= 6) strength++;
-      if (password.match(/[a-z]/)) strength++;
-      if (password.match(/[A-Z]/)) strength++;
-      if (password.match(/[0-9]/)) strength++;
-      if (password.match(/[\W_]/)) strength++;
+    registerBtn.addEventListener('click', async () => {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
 
-      let message = "";
-      if (strength <= 2) message = "كلمة المرور ضعيفة";
-      else if (strength === 3) message = "متوسطة";
-      else if (strength === 4) message = "جيدة";
-      else message = "ممتازة";
-
-      strengthText.textContent = message;
-      strengthText.style.color = strength <= 2 ? "red" : strength === 3 ? "orange" : strength === 4 ? "#85ff85" : "#4ff";
-    }
-
-    function login() {
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const messageBox = document.getElementById("message");
+      messageDiv.textContent = '';
+      messageDiv.style.color = 'white';
 
       if (!email || !password) {
-        messageBox.textContent = "يرجى ملء كل الحقول";
-        messageBox.style.color = "red";
+        messageDiv.style.color = '#ef4444';
+        messageDiv.textContent = 'يرجى ملء البريد الإلكتروني وكلمة المرور';
         return;
       }
 
-      firebase.auth().signInWithEmailAndPassword(email, password)
-        .then(() => {
-          messageBox.textContent = "مرحباً بعودتك!";
-          messageBox.style.color = "#9aff9a";
-          setTimeout(() => {
-            window.location.href = "signin.html";
-          }, 1500);
-        })
-        .catch((error) => {
-          messageBox.textContent = "حدث خطأ: " + error.message;
-          messageBox.style.color = "red";
-        });
-    }
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        messageDiv.style.color = '#10b981';
+        messageDiv.textContent = 'تم إنشاء الحساب بنجاح! جاري التحويل...';
+        setTimeout(() => {
+          window.location.href = 'retalk.html';
+        }, 2000);
+      } catch (error) {
+        messageDiv.style.color = '#ef4444';
+        if (error.code === 'auth/email-already-in-use') {
+          messageDiv.textContent = 'البريد الإلكتروني مستخدم مسبقاً';
+        } else if (error.code === 'auth/invalid-email') {
+          messageDiv.textContent = 'البريد الإلكتروني غير صالح';
+        } else if (error.code === 'auth/weak-password') {
+          messageDiv.textContent = 'كلمة المرور ضعيفة جداً';
+        } else {
+          messageDiv.textContent = 'حدث خطأ: ' + error.message;
+        }
+      }
+    });
   </script>
+
 </body>
 </html>

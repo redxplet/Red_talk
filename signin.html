@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>إنشاء حساب - RED TALK</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo&display=swap');
+
+    body {
+      background: linear-gradient(135deg, #5865f2, #4752c4);
+      font-family: 'Cairo', sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
+
+    .signup-container {
+      background-color: #2f3136;
+      padding: 40px 35px;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+      width: 100%;
+      max-width: 420px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    .signup-container h1 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      color: #ffffff;
+      text-shadow: 0 0 8px #5865f2;
+      letter-spacing: 2px;
+      user-select: none;
+    }
+
+    form {
+      margin-top: 20px;
+      text-align: right;
+      direction: rtl;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #ddd;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #40444b;
+      color: #eee;
+      font-size: 1rem;
+      box-sizing: border-box;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus {
+      outline: none;
+      background-color: #50565e;
+      box-shadow: 0 0 8px #5865f2;
+      color: #fff;
+    }
+
+    button.signup-btn {
+      width: 100%;
+      background-color: #5865f2;
+      border: none;
+      padding: 14px 0;
+      border-radius: 30px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.1s ease;
+      user-select: none;
+    }
+
+    button.signup-btn:hover {
+      background-color: #4752c4;
+    }
+
+    button.signup-btn:active {
+      transform: scale(0.97);
+    }
+
+    .back-login {
+      margin-top: 18px;
+      font-size: 0.9rem;
+      color: #bbb;
+      user-select: none;
+    }
+
+    .back-login a {
+      color: #5865f2;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
+
+    .back-login a:hover {
+      text-decoration: underline;
+      color: #4752c4;
+    }
+
+    @media (max-width: 480px) {
+      .signup-container {
+        padding: 30px 20px;
+      }
+
+      .signup-container h1 {
+        font-size: 2.3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="signup-container" role="main" aria-label="صفحة إنشاء حساب">
+    <h1>إنشاء حساب جديد</h1>
+    <form onsubmit="return false;">
+      <label for="username">اسم المستخدم</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="أدخل اسم المستخدم"
+        autocomplete="username"
+        required
+        aria-required="true"
+      />
+
+      <label for="email">البريد الإلكتروني</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="أدخل البريد الإلكتروني"
+        autocomplete="email"
+        required
+        aria-required="true"
+      />
+
+      <label for="password">كلمة المرور</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="أدخل كلمة المرور"
+        autocomplete="new-password"
+        required
+        aria-required="true"
+      />
+
+      <label for="confirm-password">تأكيد كلمة المرور</label>
+      <input
+        type="password"
+        id="confirm-password"
+        name="confirm-password"
+        placeholder="أدخل تأكيد كلمة المرور"
+        autocomplete="new-password"
+        required
+        aria-required="true"
+      />
+
+      <button class="signup-btn" type="submit" aria-label="إنشاء الحساب">إنشاء الحساب</button>
+    </form>
+    <p class="back-login">
+      لديك حساب بالفعل؟
+      <a href="index.html" aria-label="العودة إلى تسجيل الدخول">تسجيل الدخول</a>
+    </p>
+  </div>
+
+</body>
+</html>

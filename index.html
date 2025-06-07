@@ -1,169 +1,146 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>تسجيل الدخول - RED TALK</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Cairo', sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-    body {
-      background: linear-gradient(135deg, #3b82f6, #9333ea);
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: white;
-      padding: 1rem;
-    }
-    .container {
-      background: #111827;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-      padding: 2rem;
-      width: 100%;
-      max-width: 380px;
-      text-align: center;
-      animation: fadeIn 0.8s ease forwards;
-    }
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    h1 {
-      margin-bottom: 1.8rem;
-      font-weight: 700;
-      font-size: 2rem;
-      color: #f9fafb;
-      letter-spacing: 0.04em;
-    }
-    input {
-      width: 100%;
-      padding: 12px 14px;
-      margin-bottom: 1.2rem;
-      border-radius: 8px;
-      border: none;
-      font-size: 1rem;
-      outline: none;
-      transition: box-shadow 0.3s ease;
-    }
-    input:focus {
-      box-shadow: 0 0 8px #3b82f6;
-      background-color: #1f2937;
-      color: white;
-    }
-    button {
-      width: 100%;
-      padding: 12px 0;
-      border-radius: 8px;
-      border: none;
-      background-color: #3b82f6;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: white;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      user-select: none;
-    }
-    button:hover {
-      background-color: #2563eb;
-      transform: scale(1.03);
-    }
-    button:active {
-      transform: scale(0.97);
-    }
-    #message {
-      margin-top: 1rem;
-      min-height: 1.4rem;
-      font-weight: 600;
-    }
-    .signup-text {
-      margin-top: 1.4rem;
-      font-size: 0.95rem;
-    }
-    .signup-text a {
-      color: #60a5fa;
-      font-weight: 700;
-      text-decoration: none;
-      transition: text-decoration 0.2s ease;
-    }
-    .signup-text a:hover {
-      text-decoration: underline;
-    }
+    /* ... (نفس التنسيق الذي أرسلته) ... */
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>تسجيل الدخول - RED TALK</h1>
-    <input type="email" id="email" placeholder="البريد الإلكتروني" required />
-    <input type="password" id="password" placeholder="كلمة المرور" required />
-    <button id="loginBtn">تسجيل الدخول</button>
-    <div id="message"></div>
-    <p class="signup-text">ليس لديك حساب؟ <a href="signup.html">إنشاء حساب</a></p>
-  </div>
+  <main class="login-container" role="main" aria-label="صفحة تسجيل الدخول">
+    <div class="logo" aria-label="شعار RED TALK">RED TALK</div>
+    <h2>تسجيل الدخول</h2>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    <div class="input-group">
+      <input
+        type="email"
+        id="email"
+        aria-label="البريد الإلكتروني"
+        placeholder="البريد الإلكتروني"
+        autocomplete="email"
+        required
+      />
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+      </svg>
+      <div id="email-error" class="error-message">يرجى إدخال البريد الإلكتروني</div>
+    </div>
 
+    <div class="input-group" style="position: relative;">
+      <input
+        type="password"
+        id="password"
+        aria-label="كلمة المرور"
+        placeholder="كلمة المرور"
+        autocomplete="current-password"
+        required
+      />
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6-5v-3a6 6 0 1 0-12 0v3H4v10h16V12h-2zm-8-3a4 4 0 1 1 8 0v3H10v-3z"/>
+      </svg>
+      <button
+        type="button"
+        class="toggle-password"
+        aria-label="إظهار أو إخفاء كلمة المرور"
+        onclick="togglePassword()"
+        tabindex="-1"
+        title="إظهار/إخفاء كلمة المرور"
+      >👁️</button>
+      <div id="password-error" class="error-message">يرجى إدخال كلمة المرور</div>
+    </div>
+
+    <button class="login-btn" onclick="login()" aria-label="زر تسجيل الدخول">
+      دخول
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M10 17l5-5-5-5v10z"/>
+      </svg>
+    </button>
+
+    <p class="signup-text" aria-label="رابط إنشاء حساب">
+      ليس لديك حساب؟ <a href="signin.html">إنشاء حساب</a>
+    </p>
+  </main>
+
+  <!-- إضافة Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
+  <script>
+    // إعداد Firebase (استبدل الإعدادات الخاصة بك هنا)
     const firebaseConfig = {
-      apiKey: "AIzaSyCoLrZOjyIn_KbSMP35RAPzlnCpNQzfPl4",
-      authDomain: "red-talk-2a888.firebaseapp.com",
-      projectId: "red-talk-2a888",
-      storageBucket: "red-talk-2a888.appspot.com",
-      messagingSenderId: "1234567890",
-      appId: "1:1234567890:web:abcdef123456"
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
     };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+    // تهيئة Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const loginBtn = document.getElementById('loginBtn');
-    const messageDiv = document.getElementById('message');
+    function showError(id, show, message = '') {
+      const el = document.getElementById(id);
+      el.textContent = message || el.textContent;
+      el.style.display = show ? 'block' : 'none';
+    }
 
-    loginBtn.addEventListener('click', async () => {
-      const email = emailInput.value.trim();
-      const password = passwordInput.value.trim();
+    function togglePassword() {
+      const passInput = document.getElementById('password');
+      if (passInput.type === 'password') {
+        passInput.type = 'text';
+      } else {
+        passInput.type = 'password';
+      }
+    }
 
-      messageDiv.textContent = '';
-      messageDiv.style.color = 'white';
+    function login() {
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
 
-      if (!email || !password) {
-        messageDiv.style.color = '#f87171';
-        messageDiv.textContent = 'يرجى إدخال البريد الإلكتروني وكلمة المرور';
-        return;
+      let valid = true;
+
+      if (!email) {
+        showError('email-error', true, 'يرجى إدخال البريد الإلكتروني');
+        valid = false;
+      } else {
+        showError('email-error', false);
       }
 
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        messageDiv.style.color = '#10b981';
-        messageDiv.textContent = 'تم تسجيل الدخول بنجاح!';
-        setTimeout(() => {
-          window.location.href = "home.html";
-        }, 1000);
-      } catch (error) {
-        messageDiv.style.color = '#f87171';
-        if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
-          messageDiv.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
-        } else {
-          messageDiv.textContent = 'حدث خطأ: ' + error.message;
-        }
+      if (!password) {
+        showError('password-error', true, 'يرجى إدخال كلمة المرور');
+        valid = false;
+      } else {
+        showError('password-error', false);
       }
-    });
+
+      if (!valid) return;
+
+      // تسجيل الدخول باستخدام Firebase Auth
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // تسجيل الدخول ناجح
+          const user = userCredential.user;
+          alert(`مرحباً، ${user.email}! تم تسجيل الدخول بنجاح.`);
+          // هنا يمكنك إعادة التوجيه أو تنفيذ إجراءات أخرى
+          // مثلا: window.location.href = "dashboard.html";
+        })
+        .catch((error) => {
+          // حدث خطأ في تسجيل الدخول
+          const errorCode = error.code;
+          let message = 'حدث خطأ أثناء تسجيل الدخول.';
+          if (errorCode === 'auth/user-not-found' || errorCode === 'auth/wrong-password') {
+            message = 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+          } else if (errorCode === 'auth/invalid-email') {
+            message = 'البريد الإلكتروني غير صالح.';
+          }
+          showError('password-error', true, message);
+        });
+    }
   </script>
 
 </body>

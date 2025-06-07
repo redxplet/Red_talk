@@ -2,14 +2,13 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>إنشاء حساب - RED TALK</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
   <style>
-    /* ... (نفس التنسيقات السابقة) ... */
     * {
-      font-family: 'Cairo', sans-serif;
       box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
       margin: 0;
       padding: 0;
     }
@@ -19,90 +18,100 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      color: white;
+      padding: 1rem;
     }
     .container {
-      background-color: #111827;
-      color: white;
+      background: #111827;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
       padding: 2rem;
-      border-radius: 1rem;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
       width: 100%;
-      max-width: 400px;
+      max-width: 380px;
       text-align: center;
-      animation: fadeIn 1s ease-in-out;
+      animation: fadeIn 0.8s ease forwards;
     }
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
     h1 {
+      margin-bottom: 1.8rem;
+      font-weight: 700;
       font-size: 2rem;
-      margin-bottom: 1.5rem;
-      color: #facc15;
+      color: #f9fafb;
+      letter-spacing: 0.04em;
     }
     input {
       width: 100%;
-      padding: 0.75rem;
-      margin-bottom: 1rem;
+      padding: 12px 14px;
+      margin-bottom: 1.2rem;
+      border-radius: 8px;
       border: none;
-      border-radius: 0.5rem;
       font-size: 1rem;
+      outline: none;
+      transition: box-shadow 0.3s ease;
     }
-    .btn {
-      width: 100%;
-      background-color: #3b82f6;
+    input:focus {
+      box-shadow: 0 0 8px #3b82f6;
+      background-color: #1f2937;
       color: white;
-      padding: 0.75rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      transition: transform 0.2s, background-color 0.3s;
     }
-    .btn:active {
-      transform: scale(0.96);
+    button {
+      width: 100%;
+      padding: 12px 0;
+      border-radius: 8px;
+      border: none;
+      background-color: #3b82f6;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      user-select: none;
+    }
+    button:hover {
       background-color: #2563eb;
+      transform: scale(1.03);
+    }
+    button:active {
+      transform: scale(0.97);
+    }
+    #message {
+      margin-top: 1rem;
+      min-height: 1.4rem;
+      font-weight: 600;
     }
     .login-text {
-      margin-top: 1rem;
+      margin-top: 1.4rem;
+      font-size: 0.95rem;
     }
     .login-text a {
       color: #60a5fa;
+      font-weight: 700;
       text-decoration: none;
-      font-weight: bold;
+      transition: text-decoration 0.2s ease;
     }
     .login-text a:hover {
       text-decoration: underline;
     }
-    #password-strength {
-      font-weight: bold;
-      margin-bottom: 1rem;
-      text-align: right;
-      font-size: 0.9rem;
-      height: 1.2rem;
-    }
-    .weak { color: #ef4444; }
-    .medium { color: #f59e0b; }
-    .good { color: #10b981; }
-    .excellent { color: #3b82f6; }
-    #message {
-      margin-top: 1rem;
-      font-weight: bold;
-      min-height: 1.4rem;
-    }
   </style>
 </head>
 <body>
+
   <div class="container">
     <h1>إنشاء حساب - RED TALK</h1>
-    <input type="email" id="email" placeholder="البريد الإلكتروني" required />
-    <input type="password" id="password" placeholder="كلمة المرور" required />
-    <div id="password-strength"></div>
-    <button class="btn" id="registerBtn">إنشاء حساب</button>
-    <div class="login-text">
-      لديك حساب؟ <a href="index.html">تسجيل الدخول</a>
-    </div>
+    <input type="email" id="email" placeholder="البريد الإلكتروني" autocomplete="email" required />
+    <input type="password" id="password" placeholder="كلمة المرور" autocomplete="new-password" required />
+    <button id="registerBtn">إنشاء حساب</button>
     <div id="message"></div>
+    <p class="login-text">لديك حساب؟ <a href="index.html">تسجيل الدخول</a></p>
   </div>
 
   <script type="module">
@@ -124,66 +133,29 @@
 
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
-    const passwordStrength = document.getElementById('password-strength');
-    const messageDiv = document.getElementById('message');
     const registerBtn = document.getElementById('registerBtn');
+    const messageDiv = document.getElementById('message');
 
-    function checkPasswordStrength(password) {
-      let strength = 0;
-      if (password.length >= 8) strength++;
-      if (/[A-Z]/.test(password)) strength++;
-      if (/[0-9]/.test(password)) strength++;
-      if (/[^A-Za-z0-9]/.test(password)) strength++;
-
-      if (strength <= 1) {
-        return { text: "ضعيفة", className: "weak" };
-      } else if (strength === 2) {
-        return { text: "متوسطة", className: "medium" };
-      } else if (strength === 3) {
-        return { text: "جيدة", className: "good" };
-      } else if (strength === 4) {
-        return { text: "ممتازة", className: "excellent" };
-      }
-      return { text: "", className: "" };
-    }
-
-    passwordInput.addEventListener('input', () => {
-      const strength = checkPasswordStrength(passwordInput.value);
-      passwordStrength.textContent = strength.text ? `قوة كلمة المرور: ${strength.text}` : '';
-      passwordStrength.className = strength.className;
-    });
-
-    async function registerUser() {
+    registerBtn.addEventListener('click', async () => {
       const email = emailInput.value.trim();
       const password = passwordInput.value.trim();
+
       messageDiv.textContent = '';
       messageDiv.style.color = 'white';
 
-      if (!email) {
+      if (!email || !password) {
         messageDiv.style.color = '#ef4444';
-        messageDiv.textContent = 'الرجاء إدخال البريد الإلكتروني';
-        return;
-      }
-      if (!password) {
-        messageDiv.style.color = '#ef4444';
-        messageDiv.textContent = 'الرجاء إدخال كلمة المرور';
-        return;
-      }
-
-      const strength = checkPasswordStrength(password);
-      if (["ضعيفة", "متوسطة"].includes(strength.text)) {
-        messageDiv.style.color = '#ef4444';
-        messageDiv.textContent = 'يرجى اختيار كلمة مرور قوية أو ممتازة';
+        messageDiv.textContent = 'يرجى ملء البريد الإلكتروني وكلمة المرور';
         return;
       }
 
       try {
         await createUserWithEmailAndPassword(auth, email, password);
         messageDiv.style.color = '#10b981';
-        messageDiv.textContent = 'تم إنشاء الحساب بنجاح! جاري تحويلك إلى تسجيل الدخول...';
+        messageDiv.textContent = 'تم إنشاء الحساب بنجاح! جاري التحويل...';
         setTimeout(() => {
           window.location.href = 'index.html';
-        }, 2500);
+        }, 2000);
       } catch (error) {
         messageDiv.style.color = '#ef4444';
         if (error.code === 'auth/email-already-in-use') {
@@ -196,9 +168,8 @@
           messageDiv.textContent = 'حدث خطأ: ' + error.message;
         }
       }
-    }
-
-    registerBtn.addEventListener('click', registerUser);
+    });
   </script>
+
 </body>
 </html>

@@ -1,347 +1,213 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>إنشاء حساب - RED TALK</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-
     * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
       font-family: 'Cairo', sans-serif;
-      background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: linear-gradient(135deg, #3b82f6, #9333ea);
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #f0f0f0;
-      user-select: none;
-      padding: 20px;
     }
 
     .container {
-      background-color: #2f3136;
-      padding: 50px 45px 60px;
-      border-radius: 20px;
+      background-color: #111827;
+      color: white;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
       width: 100%;
       max-width: 400px;
-      box-shadow:
-        0 4px 15px rgba(0,0,0,0.5),
-        inset 0 0 10px rgba(255,255,255,0.1);
-      transition: box-shadow 0.3s ease;
       text-align: center;
-    }
-    .container:hover {
-      box-shadow:
-        0 6px 25px rgba(0,0,0,0.7),
-        inset 0 0 15px rgba(255,255,255,0.15);
+      animation: fadeIn 1s ease-in-out;
     }
 
-    .logo {
-      font-weight: 900;
-      font-size: 38px;
-      color: #85a5ff;
-      margin-bottom: 25px;
-      letter-spacing: 3px;
-      user-select: text;
-      font-family: 'Cairo', sans-serif;
-      text-shadow: 0 0 12px #7f8fff, 0 0 20px #c3d0ff;
-      transition: color 0.3s ease;
-    }
-    .logo:hover {
-      color: #a5b9ff;
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    h2 {
-      margin: 0 0 35px;
-      font-weight: 700;
-      font-size: 28px;
-      letter-spacing: 1.3px;
-      color: #e0e0e0;
-      user-select: text;
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #facc15;
     }
 
-    .input-group {
-      position: relative;
-      margin-bottom: 30px;
-      text-align: right;
-    }
-
-    input[type="text"], input[type="password"] {
+    input {
       width: 100%;
-      padding: 14px 50px 14px 15px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
       border: none;
-      border-radius: 12px;
-      background-color: #40444b;
-      color: #dcdcdc;
-      font-size: 16px;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-      caret-color: #5865f2;
+      border-radius: 0.5rem;
+      font-size: 1rem;
     }
 
-    input[type="text"]::placeholder,
-    input[type="password"]::placeholder {
-      color: #a0a0a0;
-    }
-
-    input[type="text"]:focus, input[type="password"]:focus {
-      outline: none;
-      background-color: #5865f2;
-      box-shadow: 0 0 10px #5865f2;
-      color: #fff;
-    }
-
-    .input-group svg {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      fill: #999;
-      width: 24px;
-      height: 24px;
-      pointer-events: none;
-      transition: fill 0.3s ease;
-    }
-
-    input[type="text"]:focus + svg,
-    input[type="password"]:focus + svg {
-      fill: #e0e0e0;
-    }
-
-    .toggle-password {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      color: #999;
-      font-size: 20px;
-      user-select: none;
-      transition: color 0.3s ease;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .toggle-password:hover {
-      color: #e0e0e0;
-    }
-    .toggle-password:active {
-      transform: translateY(calc(-50% + 2px));
-      color: #c3d0ff;
-    }
-
-    button.signup-btn {
+    .btn {
       width: 100%;
-      padding: 15px 0;
+      background-color: #3b82f6;
+      color: white; /* نص أبيض */
+      padding: 0.75rem;
+      font-size: 1rem;
       border: none;
-      border-radius: 30px;
-      background: #5865f2;
-      color: white;
-      font-size: 18px;
-      font-weight: 700;
+      border-radius: 0.5rem;
       cursor: pointer;
-      box-shadow: 0 6px 15px rgba(88,101,242,0.6);
-      transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
-      user-select: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-    button.signup-btn:hover {
-      background: #4752c4;
-      box-shadow: 0 8px 25px rgba(71,82,196,0.8);
-    }
-    button.signup-btn:active {
-      transform: scale(0.95);
-      box-shadow: 0 5px 12px rgba(71,82,196,0.9);
+      transition: transform 0.2s, background-color 0.3s;
     }
 
-    button.signup-btn svg {
-      width: 22px;
-      height: 22px;
-      fill: white;
+    .btn:active {
+      transform: scale(0.96);
+      background-color: #2563eb;
     }
 
-    .login-link {
-      margin-top: 25px;
-      font-size: 14px;
-      color: #bbb;
-      user-select: text;
+    .login-text {
+      margin-top: 1rem;
     }
-    .login-link a {
-      color: #85a5ff;
+
+    .login-text a {
+      color: #60a5fa;
       text-decoration: none;
-      font-weight: 600;
-      cursor: pointer;
-      transition: color 0.3s ease, text-decoration 0.3s ease;
+      font-weight: bold;
     }
-    .login-link a:hover,
-    .login-link a:focus {
-      color: #c3d0ff;
+
+    .login-text a:hover {
       text-decoration: underline;
     }
 
-    .error-message {
-      color: #ff6b6b;
-      font-size: 13px;
-      margin-top: -18px;
-      margin-bottom: 18px;
+    #password-strength {
+      font-weight: bold;
+      margin-bottom: 1rem;
       text-align: right;
-      user-select: none;
-      display: none;
+      font-size: 0.9rem;
+      height: 1.2rem;
     }
 
-    @media (max-width: 480px) {
-      .container {
-        padding: 40px 30px 50px;
-        width: 100%;
-      }
+    .weak { color: #ef4444; }       /* أحمر */
+    .medium { color: #f59e0b; }     /* أصفر */
+    .good { color: #10b981; }       /* أخضر */
+    .excellent { color: #3b82f6; }  /* أزرق */
+
+    #message {
+      margin-top: 1rem;
+      font-weight: bold;
+      min-height: 1.4rem;
     }
   </style>
 </head>
 <body>
-
-  <main class="container" role="main" aria-label="صفحة إنشاء حساب">
-    <div class="logo" aria-label="شعار RED TALK">RED TALK</div>
-    <h2>إنشاء حساب</h2>
-
-    <div class="input-group">
-      <input
-        type="text"
-        id="username"
-        aria-label="اسم المستخدم"
-        placeholder="اسم المستخدم"
-        autocomplete="username"
-        required
-      />
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-      </svg>
-      <div id="username-error" class="error-message">يرجى إدخال اسم المستخدم</div>
+  <div class="container">
+    <h1>إنشاء حساب - RED TALK</h1>
+    <input type="email" id="email" placeholder="البريد الإلكتروني" required />
+    <input type="password" id="password" placeholder="كلمة المرور" required />
+    <div id="password-strength"></div>
+    <button class="btn" onclick="registerUser()">إنشاء حساب</button>
+    <div class="login-text">
+      لديك حساب؟ <a href="index.html">تسجيل الدخول</a>
     </div>
+    <div id="message"></div>
+  </div>
 
-    <div class="input-group" style="position: relative;">
-      <input
-        type="password"
-        id="password"
-        aria-label="كلمة المرور"
-        placeholder="كلمة المرور"
-        autocomplete="new-password"
-        required
-      />
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M12 17a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm6-5v-3a6 6 0 1 0-12 0v3H4v10h16V12h-2zm-8-3a4 4 0 1 1 8 0v3H10v-3z"/>
-      </svg>
-      <button
-        type="button"
-        class="toggle-password"
-        aria-label="إظهار أو إخفاء كلمة المرور"
-        onclick="togglePassword()"
-        tabindex="-1"
-        title="إظهار/إخفاء كلمة المرور"
-      >👁️</button>
-      <div id="password-error" class="error-message">يرجى إدخال كلمة المرور</div>
-    </div>
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-    <button id="signup-btn" class="signup-btn" aria-label="إنشاء حساب">
-      إنشاء حساب
-      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path d="M12 2L3 21h18L12 2zM12 8l3 6h-6l3-6z"/>
-      </svg>
-    </button>
-
-    <p class="login-link">
-      لديك حساب؟ <a href="login.html" tabindex="0">تسجيل الدخول</a>
-    </p>
-  </main>
-
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-  <script>
-    // تهيئة Firebase - استبدل بالقيم الخاصة بك
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_AUTH_DOMAIN",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-      appId: "YOUR_APP_ID"
+      apiKey: "AIzaSyCoLrZOjyIn_KbSMP35RAPzlnCpNQzfPl4",
+      authDomain: "red-talk-2a888.firebaseapp.com",
+      databaseURL: "https://red-talk-2a888-default-rtdb.firebaseio.com",
+      projectId: "red-talk-2a888",
+      storageBucket: "red-talk-2a888.appspot.com",
+      messagingSenderId: "1234567890",
+      appId: "1:1234567890:web:abcdef123456"
     };
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
 
-    // تفعيل/إخفاء كلمة المرور
-    function togglePassword() {
-      const passwordInput = document.getElementById('password');
-      if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-      } else {
-        passwordInput.type = "password";
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const passwordStrength = document.getElementById('password-strength');
+    const messageDiv = document.getElementById('message');
+
+    function checkPasswordStrength(password) {
+      let strength = 0;
+      if (password.length >= 8) strength++;
+      if (/[A-Z]/.test(password)) strength++;
+      if (/[0-9]/.test(password)) strength++;
+      if (/[^A-Za-z0-9]/.test(password)) strength++;
+
+      if (strength <= 1) {
+        return { text: "ضعيفة", className: "weak" };
+      } else if (strength === 2) {
+        return { text: "متوسطة", className: "medium" };
+      } else if (strength === 3) {
+        return { text: "جيدة", className: "good" };
+      } else if (strength === 4) {
+        return { text: "ممتازة", className: "excellent" };
       }
+      return { text: "", className: "" };
     }
 
-    // التحقق من المدخلات
-    function validateInputs(username, password) {
-      let valid = true;
+    passwordInput.addEventListener('input', () => {
+      const strength = checkPasswordStrength(passwordInput.value);
+      passwordStrength.textContent = strength.text ? `قوة كلمة المرور: ${strength.text}` : '';
+      passwordStrength.className = strength.className;
+    });
 
-      const usernameError = document.getElementById('username-error');
-      const passwordError = document.getElementById('password-error');
+    async function registerUser() {
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+      messageDiv.textContent = '';
+      messageDiv.style.color = 'white';
 
-      if (!username.trim()) {
-        usernameError.style.display = 'block';
-        valid = false;
-      } else {
-        usernameError.style.display = 'none';
+      if (!email) {
+        messageDiv.style.color = '#ef4444';
+        messageDiv.textContent = 'الرجاء إدخال البريد الإلكتروني';
+        return;
       }
-
-      if (!password.trim() || password.length < 6) {
-        passwordError.style.display = 'block';
-        passwordError.textContent = 'يجب أن تكون كلمة المرور 6 أحرف على الأقل';
-        valid = false;
-      } else {
-        passwordError.style.display = 'none';
-      }
-
-      return valid;
-    }
-
-    // حدث الضغط على زر إنشاء حساب
-    document.getElementById('signup-btn').addEventListener('click', () => {
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
-
-      if (!validateInputs(username, password)) {
+      if (!password) {
+        messageDiv.style.color = '#ef4444';
+        messageDiv.textContent = 'الرجاء إدخال كلمة المرور';
         return;
       }
 
-      // لإنشاء حساب البريد الإلكتروني وكلمة المرور
-      auth.createUserWithEmailAndPassword(username + '@redtalk.fake', password)
-        .then((userCredential) => {
-          // تحديث اسم المستخدم (عرض الاسم فقط بدون البريد)
-          return userCredential.user.updateProfile({
-            displayName: username
-          });
-        })
-        .then(() => {
-          // بعد نجاح التسجيل، انتقل إلى index.html
-          window.location.href = 'index.html';
-        })
-        .catch((error) => {
-          const passwordError = document.getElementById('password-error');
-          passwordError.style.display = 'block';
-          passwordError.textContent = error.message;
-        });
-    });
-  </script>
+      const strength = checkPasswordStrength(password);
+      if (["ضعيفة", "متوسطة"].includes(strength.text)) {
+        messageDiv.style.color = '#ef4444';
+        messageDiv.textContent = 'يرجى اختيار كلمة مرور قوية أو ممتازة';
+        return;
+      }
 
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        messageDiv.style.color = '#10b981'; // أخضر
+        messageDiv.textContent = 'تم إنشاء الحساب بنجاح! جاري تحويلك إلى تسجيل الدخول...';
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 2500);
+      } catch (error) {
+        messageDiv.style.color = '#ef4444';
+        if (error.code === 'auth/email-already-in-use') {
+          messageDiv.textContent = 'البريد الإلكتروني مستخدم مسبقاً';
+        } else if (error.code === 'auth/invalid-email') {
+          messageDiv.textContent = 'البريد الإلكتروني غير صالح';
+        } else if (error.code === 'auth/weak-password') {
+          messageDiv.textContent = 'كلمة المرور ضعيفة جداً';
+        } else {
+          messageDiv.textContent = 'حدث خطأ: ' + error.message;
+        }
+      }
+    }
+  </script>
 </body>
 </html>

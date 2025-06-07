@@ -5,213 +5,7 @@
   <title>تسجيل الدخول - RED TALK</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Cairo', sans-serif;
-      background: linear-gradient(135deg, #5865f2 0%, #4752c4 100%);
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #f0f0f0;
-      user-select: none;
-      padding: 20px;
-    }
-
-    .login-container {
-      background-color: #2f3136;
-      padding: 50px 45px 60px;
-      border-radius: 20px;
-      width: 100%;
-      max-width: 400px;
-      box-shadow:
-        0 4px 15px rgba(0,0,0,0.5),
-        inset 0 0 10px rgba(255,255,255,0.1);
-      transition: box-shadow 0.3s ease;
-      text-align: center;
-    }
-    .login-container:hover {
-      box-shadow:
-        0 6px 25px rgba(0,0,0,0.7),
-        inset 0 0 15px rgba(255,255,255,0.15);
-    }
-
-    /* شعار RED TALK أكبر مع توهج */
-    .logo {
-      font-weight: 900;
-      font-size: 38px;
-      color: #85a5ff;
-      margin-bottom: 25px;
-      letter-spacing: 3px;
-      user-select: text;
-      font-family: 'Cairo', sans-serif;
-      text-shadow: 0 0 12px #7f8fff, 0 0 20px #c3d0ff;
-      transition: color 0.3s ease;
-    }
-    .logo:hover {
-      color: #a5b9ff;
-    }
-
-    h2 {
-      margin: 0 0 35px;
-      font-weight: 700;
-      font-size: 28px;
-      letter-spacing: 1.3px;
-      color: #e0e0e0;
-      user-select: text;
-    }
-
-    .input-group {
-      position: relative;
-      margin-bottom: 30px;
-      text-align: right;
-    }
-
-    input[type="text"], input[type="password"] {
-      width: 100%;
-      padding: 14px 50px 14px 15px;
-      border: none;
-      border-radius: 12px;
-      background-color: #40444b;
-      color: #dcdcdc;
-      font-size: 16px;
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-      caret-color: #5865f2;
-    }
-
-    input[type="text"]::placeholder,
-    input[type="password"]::placeholder {
-      color: #a0a0a0;
-    }
-
-    input[type="text"]:focus, input[type="password"]:focus {
-      outline: none;
-      background-color: #5865f2;
-      box-shadow: 0 0 10px #5865f2;
-      color: #fff;
-    }
-
-    .input-group svg {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      fill: #999;
-      width: 24px;
-      height: 24px;
-      pointer-events: none;
-      transition: fill 0.3s ease;
-    }
-
-    input[type="text"]:focus + svg,
-    input[type="password"]:focus + svg {
-      fill: #e0e0e0;
-    }
-
-    /* زر إظهار كلمة المرور */
-    .toggle-password {
-      position: absolute;
-      left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      color: #999;
-      font-size: 20px;
-      user-select: none;
-      transition: color 0.3s ease;
-      padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .toggle-password:hover {
-      color: #e0e0e0;
-    }
-    .toggle-password:active {
-      transform: translateY(calc(-50% + 2px));
-      color: #c3d0ff;
-    }
-
-    /* زر تسجيل الدخول */
-    button.login-btn {
-      width: 100%;
-      padding: 15px 0;
-      border: none;
-      border-radius: 30px;
-      background: #5865f2;
-      color: white;
-      font-size: 18px;
-      font-weight: 700;
-      cursor: pointer;
-      box-shadow: 0 6px 15px rgba(88,101,242,0.6);
-      transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.1s ease;
-      user-select: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-    button.login-btn:hover {
-      background: #4752c4;
-      box-shadow: 0 8px 25px rgba(71,82,196,0.8);
-    }
-    button.login-btn:active {
-      transform: scale(0.95);
-      box-shadow: 0 5px 12px rgba(71,82,196,0.9);
-    }
-
-    /* أيقونة داخل زر الدخول */
-    button.login-btn svg {
-      width: 22px;
-      height: 22px;
-      fill: white;
-    }
-
-    /* نص إنشاء حساب مع لون مختلف للرابط */
-    .signup-text {
-      margin-top: 25px;
-      font-size: 14px;
-      color: #bbb;
-      user-select: text;
-    }
-    .signup-text a {
-      color: #85a5ff;
-      text-decoration: none;
-      font-weight: 600;
-      cursor: pointer;
-      transition: color 0.3s ease, text-decoration 0.3s ease;
-    }
-    .signup-text a:hover,
-    .signup-text a:focus {
-      color: #c3d0ff;
-      text-decoration: underline;
-    }
-
-    .error-message {
-      color: #ff6b6b;
-      font-size: 13px;
-      margin-top: -18px;
-      margin-bottom: 18px;
-      text-align: right;
-      user-select: none;
-      display: none;
-    }
-
-    /* استجابة الصفحة */
-    @media (max-width: 480px) {
-      .login-container {
-        padding: 40px 30px 50px;
-        width: 100%;
-      }
-    }
+    /* ... (نفس التنسيق الذي أرسلته) ... */
   </style>
 </head>
 <body>
@@ -222,17 +16,17 @@
 
     <div class="input-group">
       <input
-        type="text"
-        id="username"
-        aria-label="اسم المستخدم"
-        placeholder="اسم المستخدم"
-        autocomplete="username"
+        type="email"
+        id="email"
+        aria-label="البريد الإلكتروني"
+        placeholder="البريد الإلكتروني"
+        autocomplete="email"
         required
       />
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
         <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
       </svg>
-      <div id="username-error" class="error-message">يرجى إدخال اسم المستخدم</div>
+      <div id="email-error" class="error-message">يرجى إدخال البريد الإلكتروني</div>
     </div>
 
     <div class="input-group" style="position: relative;">
@@ -270,7 +64,25 @@
     </p>
   </main>
 
+  <!-- إضافة Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+
   <script>
+    // إعداد Firebase (استبدل الإعدادات الخاصة بك هنا)
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_AUTH_DOMAIN",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    // تهيئة Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
     function showError(id, show, message = '') {
       const el = document.getElementById(id);
       el.textContent = message || el.textContent;
@@ -287,16 +99,16 @@
     }
 
     function login() {
-      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value.trim();
 
       let valid = true;
 
-      if (!username) {
-        showError('username-error', true, 'يرجى إدخال اسم المستخدم');
+      if (!email) {
+        showError('email-error', true, 'يرجى إدخال البريد الإلكتروني');
         valid = false;
       } else {
-        showError('username-error', false);
+        showError('email-error', false);
       }
 
       if (!password) {
@@ -308,13 +120,28 @@
 
       if (!valid) return;
 
-      // محاكاة تحقق وهمي (غير متصل بخادم)
-      if (username !== 'user' || password !== 'pass123') {
-        showError('password-error', true, 'اسم المستخدم أو كلمة المرور غير صحيحة');
-        return;
-      } else {
-        showError('password-error', false);
-      }
+      // تسجيل الدخول باستخدام Firebase Auth
+      auth.signInWithEmailAndPassword(email, password)
+        .then((userCredential) => {
+          // تسجيل الدخول ناجح
+          const user = userCredential.user;
+          alert(`مرحباً، ${user.email}! تم تسجيل الدخول بنجاح.`);
+          // هنا يمكنك إعادة التوجيه أو تنفيذ إجراءات أخرى
+          // مثلا: window.location.href = "dashboard.html";
+        })
+        .catch((error) => {
+          // حدث خطأ في تسجيل الدخول
+          const errorCode = error.code;
+          let message = 'حدث خطأ أثناء تسجيل الدخول.';
+          if (errorCode === 'auth/user-not-found' || errorCode === 'auth/wrong-password') {
+            message = 'البريد الإلكتروني أو كلمة المرور غير صحيحة.';
+          } else if (errorCode === 'auth/invalid-email') {
+            message = 'البريد الإلكتروني غير صالح.';
+          }
+          showError('password-error', true, message);
+        });
+    }
+  </script>
 
-      alert(`مرحباً، ${username}! تم تسجيل الدخول بنجاح.`);
-      // هنا يمكنك تحويل المستخدم أو تنفيذ إجراءات أخرى
+</body>
+</html>

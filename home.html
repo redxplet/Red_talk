@@ -1,219 +1,96 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>RED TALK - الصفحة الرئيسية</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Cairo', sans-serif;
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 0;
-    }
-    body {
-      background: linear-gradient(135deg, #1e40af, #3b82f6);
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      background-color: #fafafa;
+      color: #333;
     }
     header {
-      background: rgba(255 255 255 / 0.1);
-      padding: 1rem 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 8px rgb(0 0 0 / 0.2);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-    header h1 {
-      font-weight: 700;
-      font-size: 1.5rem;
-      user-select: none;
-    }
-    .profile-btn {
-      background: transparent;
-      border: none;
-      color: #fff;
-      font-size: 1.25rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      transition: color 0.3s;
-    }
-    .profile-btn:hover {
-      color: #facc15;
-    }
-    .profile-btn svg {
-      width: 24px;
-      height: 24px;
-      fill: currentColor;
-    }
-    main {
-      flex: 1;
-      padding: 1.5rem;
-      overflow-y: auto;
-    }
-    .welcome-text {
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
-      font-weight: 600;
+      background-color: #d32f2f;
+      color: white;
+      padding: 18px 20px;
+      font-size: 24px;
+      position: relative;
       text-align: center;
+      font-weight: bold;
     }
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
-      gap: 1rem;
-    }
-    .card {
-      background: rgba(255 255 255 / 0.15);
-      border-radius: 12px;
-      padding: 1rem;
-      box-shadow: 0 4px 8px rgb(0 0 0 / 0.3);
-      transition: background 0.3s ease;
+    .top-right-button {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      background: white;
+      border: none;
+      border-radius: 20px;
+      color: #d32f2f;
+      padding: 8px 15px;
+      font-weight: 600;
       cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      transition: background-color 0.3s;
     }
-    .card:hover {
-      background: rgba(255 255 255 / 0.3);
+    .top-right-button:hover {
+      background-color: #f5f5f5;
     }
-    .card h2 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      color: #facc15;
+    ul.chat-list {
+      list-style: none;
+      padding: 15px 20px;
+      margin: 0;
+      min-height: 300px;
     }
-    .card p {
-      font-size: 0.9rem;
-      line-height: 1.3;
+    ul.chat-list li {
+      background: white;
+      margin-bottom: 12px;
+      padding: 14px 20px;
+      border-radius: 15px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+      font-size: 16px;
+      line-height: 1.4;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
     }
-    /* زر الإضافة */
-    .add-btn {
+    ul.chat-list li:hover {
+      background-color: #ffe6e6;
+    }
+    button.fab {
       position: fixed;
       bottom: 25px;
       left: 25px;
-      background-color: #10b981; /* أخضر */
+      background-color: #d32f2f;
       border: none;
       border-radius: 50%;
       width: 60px;
       height: 60px;
-      font-size: 2.5rem;
+      font-size: 32px;
       color: white;
+      font-weight: bold;
       cursor: pointer;
-      box-shadow: 0 4px 10px rgb(16 185 129 / 0.6);
-      transition: background-color 0.3s ease;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      box-shadow: 0 5px 15px rgba(211,47,47,0.5);
+      transition: background-color 0.3s;
     }
-    .add-btn:hover {
-      background-color: #059669;
-    }
-    .add-btn[title]:hover::after {
-      content: attr(title);
-      position: absolute;
-      bottom: 90px;
-      left: 25px;
-      background: #111827;
-      color: #facc15;
-      padding: 5px 8px;
-      border-radius: 4px;
-      white-space: nowrap;
-      font-size: 0.9rem;
-      box-shadow: 0 0 5px #facc15;
-    }
-    /* قائمة التنقل السفلية */
-    nav.bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(255 255 255 / 0.1);
-      display: flex;
-      justify-content: space-around;
-      padding: 0.5rem 0;
-      box-shadow: 0 -4px 8px rgb(0 0 0 / 0.2);
-      z-index: 10;
-    }
-    nav.bottom-nav a {
-      color: #e0e7ff;
-      text-decoration: none;
-      font-size: 0.9rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      transition: color 0.3s;
-      user-select: none;
-    }
-    nav.bottom-nav a:hover {
-      color: #facc15;
-    }
-    nav.bottom-nav svg {
-      width: 22px;
-      height: 22px;
-      fill: currentColor;
+    button.fab:hover {
+      background-color: #b82828;
     }
   </style>
 </head>
 <body>
 
   <header>
-    <h1>RED TALK</h1>
-    <button class="profile-btn" onclick="location.href='profile.html'" title="الملف الشخصي">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
-      الملف الشخصي
-    </button>
+    RED TALK
+    <button class="top-right-button" onclick="window.location.href='profile.html'">الملف الشخصي</button>
   </header>
 
-  <main>
-    <div class="welcome-text" id="welcomeText">مرحبًا بك من جديد!</div>
+  <ul class="chat-list" id="chatList">
+    <!-- هنا ستظهر المحادثات -->
+  </ul>
 
-    <div class="cards">
-      <div class="card">
-        <h2>آخر المحادثات</h2>
-        <p>لا توجد محادثات جديدة حالياً.</p>
-      </div>
-      <div class="card">
-        <h2>الأصدقاء</h2>
-        <p>لم تضف أصدقاء حتى الآن.</p>
-      </div>
-      <div class="card">
-        <h2>الإشعارات</h2>
-        <p>لا توجد إشعارات جديدة.</p>
-      </div>
-    </div>
-  </main>
+  <button class="fab" onclick="window.location.href='add.html'">+</button>
 
-  <button class="add-btn" title="إضافة محادثة" onclick="alert('إضافة محادثة جديدة')">+</button>
-
-  <nav class="bottom-nav">
-    <a href="home.html" title="الرئيسية">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 12l9-9 9 9v9a3 3 0 0 1-3 3h-4a3 3 0 0 1-3-3v-5H6v5a3 3 0 0 1-3-3v-9z"/></svg>
-      الرئيسية
-    </a>
-    <a href="#" title="المحادثات">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v14l4-4h14c1.1 0 2-.9 2-2V4a2 2 0 0 0-2-2z"/></svg>
-      المحادثات
-    </a>
-    <a href="#" title="الإعدادات">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.07-.61.07-.94s-.03-.64-.07-.94l2.03-1.58a.5.5 0 0 0 .12-.63l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39.96a7.007 7.007 0 0 0-1.63-.94l-.36-2.54A.5.5 0 0 0 14 3h-4a.5.5 0 0 0-.5.43l-.36 2.54a7.007 7.007 0 0 0-1.63.94l-2.39-.96a.5.5 0 0 0-.61.22l-1.92 3.32a.5.5 0 0 0 .12.63l2.03 1.58c-.04.3-.07.61-.07.94s.03.64.07.94l-2.03 1.58a.5.5 0 0 0-.12.63l1.92 3.32c.13.22.42.3.61.22l2.39-.96c.5.37 1.04.68 1.63.94l.36 2.54c.04.25.25.43.5.43h4c.25 0 .46-.18.5-.43l.36-2.54c.59-.26 1.13-.57 1.63-.94l2.39.96c.19.08.48 0 .61-.22l1.92-3.32a.5.5 0 0 0-.12-.63l-2.03-1.58z"/></svg>
-      الإعدادات
-    </a>
-    <a href="profile.html" title="الملف الشخصي">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
-      الملف الشخصي
-    </a>
-  </nav>
-
-  <script>
-    // تعيين اسم المستخدم الترحيبي - غيّر هذا الجزء حسب نظام تسجيل الدخول لديك
-    const username = "أحمد";
-    document.getElementById('welcomeText').textContent = `مرحبًا بك من جديد، ${username}!`;
-  </script>
 </body>
 </html>

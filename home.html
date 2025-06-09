@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -243,6 +244,84 @@
   <header>
     <h2>RED TALK</h2>
     <button class="profile-btn" onclick="location.href='profile.html'" aria-label="الملف الشخصي">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" width="24" height="24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M5.121 17.804A9 9 0 1117.803 5.122 9 9 0 015.121 17.804zM12 12a4 4 0 100-8 4 4 0 000 8z
+          d="M5.121 17.804A9 9 0 1117.803 5.122 9 9 0 015.121 17.804zM12 12a4 4 0 100-8 4 4 0 000 8z"/>
+      </svg>
+      الملف الشخصي
+      <span class="tooltip">اذهب إلى الملف الشخصي</span>
+    </button>
+  </header>
+
+  <div class="chat-container" id="chat-container">
+    <div class="welcome-msg">مرحباً بعودتك!</div>
+    <!-- رسائل المحادثة ستظهر هنا -->
+  </div>
+
+  <button class="add-btn" id="add-btn" aria-label="إضافة شخص">+</button>
+
+  <div class="popup-menu" id="popup-menu" role="menu" aria-hidden="true">
+    <button role="menuitem" onclick="alert('وظيفة إضافة صديق تحت التطوير')">إضافة صديق</button>
+    <button role="menuitem" onclick="alert('وظيفة إنشاء مجموعة تحت التطوير')">إنشاء مجموعة</button>
+  </div>
+
+  <div class="chat-input">
+    <input type="text" id="chat-input" placeholder="اكتب رسالتك هنا..." aria-label="إدخال رسالة" />
+    <button id="send-btn" aria-label="إرسال رسالة">إرسال</button>
+  </div>
+
+  <script>
+    const addBtn = document.getElementById('add-btn');
+    const popupMenu = document.getElementById('popup-menu');
+    const chatContainer = document.getElementById('chat-container');
+    const sendBtn = document.getElementById('send-btn');
+    const chatInput = document.getElementById('chat-input');
+
+    // إظهار/إخفاء القائمة المنبثقة عند الضغط على زر زائد
+    addBtn.addEventListener('click', () => {
+      const isVisible = popupMenu.classList.contains('visible');
+      if (isVisible) {
+        popupMenu.classList.remove('visible');
+        popupMenu.setAttribute('aria-hidden', 'true');
+      } else {
+        popupMenu.classList.add('visible');
+        popupMenu.setAttribute('aria-hidden', 'false');
+      }
+    });
+
+    // إضافة رسالة جديدة من المستخدم عند الضغط على زر إرسال أو الضغط على Enter
+    function addMessage(text, fromMe = true) {
+      if (!text.trim()) return;
+      const messageEl = document.createElement('div');
+      messageEl.classList.add('message');
+      messageEl.classList.add(fromMe ? 'from-me' : 'from-them');
+      messageEl.textContent = text;
+      chatContainer.appendChild(messageEl);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
+    sendBtn.addEventListener('click', () => {
+      const text = chatInput.value;
+      addMessage(text, true);
+      chatInput.value = '';
+      // هنا يمكنك إضافة منطق الردود التلقائية أو التعامل مع الرسائل
+    });
+
+    chatInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        sendBtn.click();
+      }
+    });
+
+    // إخفاء القائمة عند النقر خارجها
+    document.addEventListener('click', (e) => {
+      if (!popupMenu.contains(e.target) && !addBtn.contains(e.target)) {
+        popupMenu.classList.remove('visible');
+        popupMenu.setAttribute('aria-hidden', 'true');
+      }
+    });
+  </script>
+
+</body>
+</html>

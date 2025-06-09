@@ -2,95 +2,206 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RED TALK - الصفحة الرئيسية</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RED TALK</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #fafafa;
-      color: #333;
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(to bottom right, #0f0f0f, #1c1c1c, #2a2a2a);
+      color: #f0f0f0;
     }
+
     header {
-      background-color: #d32f2f;
+      background: linear-gradient(to left, #ff3d5a, #ff6161);
       color: white;
-      padding: 18px 20px;
-      font-size: 24px;
-      position: relative;
-      text-align: center;
-      font-weight: bold;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
-    .top-right-button {
-      position: absolute;
-      top: 18px;
-      right: 20px;
-      background: white;
-      border: none;
-      border-radius: 20px;
-      color: #d32f2f;
-      padding: 8px 15px;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-      transition: background-color 0.3s;
-    }
-    .top-right-button:hover {
-      background-color: #f5f5f5;
-    }
-    ul.chat-list {
-      list-style: none;
-      padding: 15px 20px;
+
+    header h1 {
+      font-size: 1.6rem;
       margin: 0;
-      min-height: 300px;
     }
-    ul.chat-list li {
-      background: white;
-      margin-bottom: 12px;
-      padding: 14px 20px;
-      border-radius: 15px;
-      box-shadow: 0 1px 5px rgba(0,0,0,0.1);
-      font-size: 16px;
-      line-height: 1.4;
-      cursor: pointer;
-      transition: background-color 0.2s ease;
-    }
-    ul.chat-list li:hover {
-      background-color: #ffe6e6;
-    }
-    button.fab {
-      position: fixed;
-      bottom: 25px;
-      left: 25px;
-      background-color: #d32f2f;
+
+    #profileBtn {
+      background: none;
       border: none;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      font-size: 32px;
       color: white;
-      font-weight: bold;
+      font-size: 1.8rem;
       cursor: pointer;
-      box-shadow: 0 5px 15px rgba(211,47,47,0.5);
-      transition: background-color 0.3s;
     }
-    button.fab:hover {
-      background-color: #b82828;
+
+    main {
+      padding: 1rem;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .welcome {
+      text-align: center;
+      font-size: 1.3rem;
+      color: #ddd;
+      margin: 1rem 0 2rem;
+    }
+
+    .card-group {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      background: #1f1f1f;
+      padding: 1rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      flex: 1 1 220px;
+      min-height: 100px;
+      text-align: center;
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      color: #ff4d6d;
+    }
+
+    #addChatBtn {
+      position: fixed;
+      bottom: 90px;
+      left: 20px;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(to left, #ff3d5a, #ff6161);
+      color: white;
+      font-size: 2rem;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      z-index: 99;
+    }
+
+    #chatOptions {
+      position: fixed;
+      bottom: 150px;
+      left: 20px;
+      background: #2a2a2a;
+      border-radius: 10px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 100;
+    }
+
+    .chat-option {
+      padding: 0.7rem 1rem;
+      cursor: pointer;
+      border-bottom: 1px solid #444;
+      color: #eee;
+    }
+
+    .chat-option:last-child {
+      border-bottom: none;
+    }
+
+    .chat-option:hover {
+      background-color: #3a3a3a;
+    }
+
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #111;
+      border-top: 1px solid #333;
+      display: flex;
+      justify-content: space-around;
+      padding: 0.5rem 0;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #aaa;
+      font-size: 1.3rem;
+      text-align: center;
+    }
+
+    nav a:hover {
+      color: #ff3d5a;
+    }
+
+    nav a.active {
+      color: #ff3d5a;
     }
   </style>
 </head>
 <body>
 
   <header>
-    RED TALK
-    <button class="top-right-button" onclick="window.location.href='profile.html'">الملف الشخصي</button>
+    <h1>RED TALK</h1>
+    <button id="profileBtn" title="الملف الشخصي"><i class="fas fa-user-circle"></i></button>
   </header>
 
-  <ul class="chat-list" id="chatList">
-    <!-- هنا ستظهر المحادثات -->
-  </ul>
+  <main>
+    <div class="welcome">مرحباً بك في <strong>RED TALK</strong>، استكشف محادثاتك الآن!</div>
 
-  <button class="fab" onclick="window.location.href='add.html'">+</button>
+    <div class="card-group">
+      <div class="card">
+        <h3>📨 آخر المحادثات</h3>
+        <p>لا توجد محادثات بعد</p>
+      </div>
+      <div class="card">
+        <h3>🟢 الأصدقاء المتصلين</h3>
+        <p>لا يوجد أحد حالياً</p>
+      </div>
+      <div class="card">
+        <h3>🔔 الإشعارات</h3>
+        <p>لا إشعارات جديدة</p>
+      </div>
+    </div>
+  </main>
 
+  <button id="addChatBtn" title="محادثة جديدة">+</button>
+
+  <div id="chatOptions">
+    <div class="chat-option" onclick="window.location.href='add.html'">➕ محادثة جديدة</div>
+    <div class="chat-option">👥 مجموعة</div>
+    <div class="chat-option">📝 ملاحظة</div>
+  </div>
+
+  <nav>
+    <a href="chat.html" class="active"><i class="fas fa-comments"></i></a>
+    <a href="notf.html"><i class="fas fa-bell"></i></a>
+    <a href="strings.html"><i class="fas fa-cog"></i></a>
+  </nav>
+
+  <script>
+    const addBtn = document.getElementById('addChatBtn');
+    const options = document.getElementById('chatOptions');
+
+    addBtn.addEventListener('click', () => {
+      options.style.display = options.style.display === 'flex' ? 'none' : 'flex';
+    });
+
+    document.getElementById('profileBtn').onclick = () => {
+      window.location.href = 'profile.html';
+    };
+  </script>
+<script src="home.js"></script>
 </body>
 </html>

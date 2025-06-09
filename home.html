@@ -1,62 +1,101 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>الرئيسية - RED TALK</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
   <style>
-    * { font-family: 'Cairo', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      font-family: 'Cairo', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
     body {
-      background-color: #f3f4f6;
-      height: 100vh;
+      background-color: #f9fafb;
       display: flex;
       flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+      color: #1f2937;
     }
     header {
-      background-color: #1f2937;
-      color: white;
+      background-color: #1e40af;
+      color: #f9fafb;
       padding: 1rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: 0 3px 6px rgba(30, 64, 175, 0.3);
+      user-select: none;
     }
-    header h2 { font-size: 1.5rem; }
+    header h2 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
     .profile-btn {
       background-color: #3b82f6;
       border: none;
       color: white;
-      padding: 0.5rem 1rem;
+      padding: 0.5rem 1.25rem;
       border-radius: 9999px;
       cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 6px rgba(59, 130, 246, 0.5);
+    }
+    .profile-btn:hover {
+      background-color: #2563eb;
+      box-shadow: 0 6px 12px rgba(37, 99, 235, 0.6);
     }
     .chat-container {
       flex: 1;
-      padding: 1rem;
+      padding: 1rem 1.5rem;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 0.75rem;
+      background: white;
+      scrollbar-width: thin;
+      scrollbar-color: #3b82f6 transparent;
+    }
+    .chat-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    .chat-container::-webkit-scrollbar-thumb {
+      background-color: #3b82f6;
+      border-radius: 4px;
     }
     .message {
       max-width: 70%;
-      padding: 0.75rem 1rem;
-      border-radius: 1rem;
+      padding: 0.75rem 1.25rem;
+      border-radius: 1.25rem;
       font-size: 1rem;
+      line-height: 1.4;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      word-wrap: break-word;
+      white-space: pre-wrap;
+      user-select: text;
+      transition: background-color 0.3s ease;
     }
     .from-me {
       background-color: #3b82f6;
       color: white;
       align-self: flex-end;
+      border-bottom-right-radius: 0;
     }
     .from-them {
-      background-color: #e5e7eb;
-      color: #111827;
+      background-color: #e0e7ff;
+      color: #1e40af;
       align-self: flex-start;
+      border-bottom-left-radius: 0;
     }
     .add-btn {
       position: fixed;
-      bottom: 80px;
+      bottom: 90px;
       left: 20px;
       background-color: #10b981;
       color: white;
@@ -64,30 +103,60 @@
       border-radius: 50%;
       width: 56px;
       height: 56px;
-      font-size: 2rem;
+      font-size: 2.5rem;
       cursor: pointer;
+      box-shadow: 0 6px 15px rgba(16, 185, 129, 0.6);
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      user-select: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      line-height: 1;
+    }
+    .add-btn:hover {
+      background-color: #059669;
+      transform: scale(1.1);
     }
     .chat-input {
       display: flex;
-      padding: 0.5rem;
-      background: #fff;
+      padding: 0.75rem 1.5rem;
+      background: white;
       border-top: 1px solid #ddd;
+      box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.05);
     }
     .chat-input input {
       flex: 1;
-      padding: 0.75rem;
+      padding: 0.85rem 1.25rem;
       border: 1px solid #ccc;
-      border-radius: 999px;
-      margin-right: 0.5rem;
+      border-radius: 9999px;
+      margin-right: 0.75rem;
       font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    .chat-input input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 5px #3b82f6;
     }
     .chat-input button {
-      padding: 0.75rem 1rem;
+      padding: 0.85rem 1.5rem;
       background-color: #3b82f6;
       border: none;
       color: white;
-      border-radius: 999px;
+      border-radius: 9999px;
       cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      box-shadow: 0 4px 6px rgba(59, 130, 246, 0.5);
+      transition: background-color 0.3s ease, transform 0.15s ease;
+      user-select: none;
+    }
+    .chat-input button:hover {
+      background-color: #2563eb;
+      transform: scale(1.05);
+    }
+    .chat-input button:active {
+      transform: scale(0.95);
     }
   </style>
 </head>
@@ -95,27 +164,25 @@
 
   <header>
     <h2>RED TALK</h2>
-    <button class="profile-btn" onclick="openProfile()">الملف الشخصي</button>
+    <button class="profile-btn" onclick="location.href='profile.html'">الملف الشخصي</button>
   </header>
 
   <div class="chat-container" id="chat">
-    <!-- الرسائل الحية ستظهر هنا -->
+    <!-- رسائل الشات تظهر هنا -->
   </div>
 
   <div class="chat-input">
-    <input type="text" id="messageInput" placeholder="اكتب رسالة...">
+    <input type="text" id="messageInput" placeholder="اكتب رسالة..." autocomplete="off" />
     <button onclick="sendMessage()">إرسال</button>
   </div>
 
-  <button class="add-btn" onclick="addPerson()">+</button>
+  <button class="add-btn" title="إضافة شخص" onclick="addPerson()">+</button>
 
   <!-- Firebase SDK -->
   <script type="module">
-    // Import Firebase SDK
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
     import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    // Firebase config (غيّر هذه المعلومات حسب مشروعك)
     const firebaseConfig = {
       apiKey: "AIzaSyCoLrZOjyIn_KbSMP35RAPzlnCpNQzfPl4",
       authDomain: "red-talk-2a888.firebaseapp.com",
@@ -131,40 +198,38 @@
     const chatContainer = document.getElementById("chat");
     const messageInput = document.getElementById("messageInput");
 
-    // إرسال رسالة
     async function sendMessage() {
       const msg = messageInput.value.trim();
-      if (msg === "") return;
+      if (!msg) return;
 
-      await addDoc(collection(db, "messages"), {
-        text: msg,
-        from: "me", // لاحقًا يمكن ربطها بالمستخدم
-        createdAt: serverTimestamp()
-      });
-
-      messageInput.value = "";
+      try {
+        await addDoc(collection(db, "messages"), {
+          text: msg,
+          from: "me",
+          createdAt: serverTimestamp()
+        });
+        messageInput.value = "";
+      } catch (error) {
+        alert("حدث خطأ أثناء إرسال الرسالة.");
+        console.error(error);
+      }
     }
 
-    // عرض الرسائل مباشرة
     const q = query(collection(db, "messages"), orderBy("createdAt"));
     onSnapshot(q, (snapshot) => {
       chatContainer.innerHTML = "";
       snapshot.forEach(doc => {
         const data = doc.data();
-        const div = document.createElement("div");
-        div.className = "message " + (data.from === "me" ? "from-me" : "from-them");
-        div.textContent = data.text;
-        chatContainer.appendChild(div);
+        const msgDiv = document.createElement("div");
+        msgDiv.className = "message " + (data.from === "me" ? "from-me" : "from-them");
+        msgDiv.textContent = data.text;
+        chatContainer.appendChild(msgDiv);
       });
       chatContainer.scrollTop = chatContainer.scrollHeight;
     });
 
-    function openProfile() {
-      alert("سيتم فتح الملف الشخصي قريباً 🔧");
-    }
-
     function addPerson() {
-      alert("ميزة إضافة شخص ستتوفر قريباً ✨");
+      alert("ميزة إضافة شخص ستتوفر قريباً إن شاء الله!");
     }
   </script>
 

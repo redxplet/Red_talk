@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>الملف الشخصي - RED TALK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      font-family: 'Cairo', sans-serif;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: linear-gradient(135deg, #3b82f6, #9333ea);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+    .profile-container {
+      background-color: #111827;
+      color: white;
+      max-width: 450px;
+      width: 100%;
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      padding: 2rem;
+      animation: fadeIn 1s ease forwards;
+    }
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+    h1 {
+      text-align: center;
+      color: #facc15;
+      margin-bottom: 1.5rem;
+    }
+    .avatar {
+      display: block;
+      margin: 0 auto 1rem auto;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid #facc15;
+      object-fit: cover;
+    }
+    .info {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: #60a5fa;
+    }
+    input[type="text"], input[type="email"], input[type="tel"] {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+      background-color: #374151;
+      color: white;
+      transition: background-color 0.3s;
+    }
+    input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus {
+      background-color: #4b5563;
+    }
+    .readonly {
+      background-color: #6b7280;
+      cursor: not-allowed;
+    }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      border: none;
+      background-color: #facc15;
+      color: #111827;
+      font-weight: 700;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #eab308;
+    }
+    .redtalk-code {
+      font-family: monospace;
+      font-size: 1.25rem;
+      text-align: center;
+      margin: 1rem 0;
+      padding: 0.5rem 0;
+      border-radius: 0.5rem;
+      background-color: #2563eb;
+      color: white;
+      letter-spacing: 0.15em;
+      user-select: all;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .redtalk-code:hover {
+      background-color: #1d4ed8;
+    }
+    .note {
+      font-size: 0.875rem;
+      color: #9ca3af;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <main class="profile-container" role="main" aria-label="صفحة الملف الشخصي">
+    <h1>الملف الشخصي - RED TALK</h1>
+    <img src="https://ui-avatars.com/api/?name=User&background=facc15&color=111827&size=120&rounded=true" alt="صورة الملف الشخصي" class="avatar" id="avatar"/>
+
+    <div class="info">
+      <label for="displayName">الاسم الكامل</label>
+      <input type="text" id="displayName" placeholder="ادخل اسمك الكامل" />
+    </div>
+
+    <div class="info">
+      <label for="email">البريد الإلكتروني</label>
+      <input type="email" id="email" placeholder="ادخل بريدك الإلكتروني" />
+    </div>
+
+    <div class="info">
+      <label for="phone">رقم الهاتف</label>
+      <input type="tel" id="phone" placeholder="ادخل رقم هاتفك" />
+    </div>
+
+    <div class="info">
+      <label>رمز RED TALK الخاص بك</label>
+      <div class="redtalk-code" id="redtalkCode" title="اضغط لنسخ الرمز">N/A</div>
+      <div class="note">رمز مكون من 11 حرفًا وأرقام فريد يميز حسابك ويمكن البحث به عن الأشخاص.</div>
+    </div>
+
+    <button id="saveBtn" aria-label="حفظ بيانات الملف الشخصي">حفظ التغييرات</button>
+  </main>
+
+  <script>
+    // توليد رمز RED TALK عشوائي (11 حرف وأرقام)
+    function generateRedTalkCode() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let code = '';
+      for(let i=0; i<11; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return code;
+    }
+
+    // تحميل البيانات من localStorage
+    function loadProfile() {
+      const displayName = localStorage.getItem('displayName') || '';
+      const email = localStorage.getItem('email') || '';
+      const phone = localStorage.getItem('phone') || '';
+      let redtalkCode = localStorage.getItem('redtalkCode');
+
+      if (!redtalkCode) {
+        redtalkCode = generateRedTalkCode();
+        localStorage.setItem('redtalkCode', redtalkCode);
+      }
+
+      document.getElementById('displayName').value = displayName;
+      document.getElementById('email').value = email;
+      document.getElementById('phone').value = phone;
+      document.getElementById('redtalkCode').textContent = redtalkCode;
+    }
+
+    // حفظ البيانات في localStorage
+    function saveProfile() {
+      const displayName = document.getElementById('displayName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+
+      if (!displayName || !email) {
+        alert('يرجى إدخال الاسم والبريد الإلكتروني.');
+        return;
+      }
+
+      localStorage.setItem('displayName', displayName);
+      localStorage.setItem('email', email);
+      localStorage.setItem('phone', phone);
+
+      alert('تم حفظ بيانات الملف الشخصي بنجاح!');
+    }
+
+    // نسخ رمز RED TALK عند الضغط عليه
+    document.getElementById('redtalkCode').addEventListener('click', () => {
+      const code = document.getElementById('redtalkCode').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        alert('تم نسخ رمز RED TALK: ' + code);
+      });
+    });
+
+    // زر الحفظ
+    document.getElementById('saveBtn').addEventListener('click', saveProfile);
+
+    // تحميل البيانات عند فتح الصفحة
+    loadProfile();
+  </script>
+</body>
+</html>

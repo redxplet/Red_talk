@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>إضافة صديق - RED TALK</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(to bottom right, #0f2027, #203a43, #2c5364); /* تدرج ليلي */
+      color: white;
+      padding: 0;
+    }
+
+    header {
+      background: #ff3d5a;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+      font-size: 1.4rem;
+      margin: 0;
+    }
+
+    main {
+      max-width: 500px;
+      margin: 2rem auto;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    label, input, button {
+      display: block;
+      width: 100%;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    input {
+      padding: 0.6rem;
+      border-radius: 10px;
+      border: none;
+    }
+
+    button {
+      background: #ff3d5a;
+      color: white;
+      border: none;
+      padding: 0.6rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #ff5e6c;
+    }
+
+    #result {
+      margin-top: 1rem;
+      font-weight: bold;
+      color: #ffe;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>إضافة صديق</h1>
+  </header>
+
+  <main>
+    <label for="codeInput">أدخل رمز صديقك:</label>
+    <input type="text" id="codeInput" placeholder="مثال: 123ABC" />
+    <button id="searchBtn">بحث</button>
+    <div id="result"></div>
+  </main>
+
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+  <script src="add.js"></script>
+
+</body>
+</html>

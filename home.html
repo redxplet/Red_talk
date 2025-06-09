@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>الرئيسية - RED TALK</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Cairo', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background-color: #f3f4f6;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background-color: #1f2937;
+      color: white;
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h2 { font-size: 1.5rem; }
+    .profile-btn {
+      background-color: #3b82f6;
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      cursor: pointer;
+    }
+    .chat-container {
+      flex: 1;
+      padding: 1rem;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .message {
+      max-width: 70%;
+      padding: 0.75rem 1rem;
+      border-radius: 1rem;
+      font-size: 1rem;
+    }
+    .from-me {
+      background-color: #3b82f6;
+      color: white;
+      align-self: flex-end;
+    }
+    .from-them {
+      background-color: #e5e7eb;
+      color: #111827;
+      align-self: flex-start;
+    }
+    .add-btn {
+      position: fixed;
+      bottom: 80px;
+      left: 20px;
+      background-color: #10b981;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      font-size: 2rem;
+      cursor: pointer;
+    }
+    .chat-input {
+      display: flex;
+      padding: 0.5rem;
+      background: #fff;
+      border-top: 1px solid #ddd;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 999px;
+      margin-right: 0.5rem;
+      font-size: 1rem;
+    }
+    .chat-input button {
+      padding: 0.75rem 1rem;
+      background-color: #3b82f6;
+      border: none;
+      color: white;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h2>RED TALK</h2>
+    <button class="profile-btn" onclick="openProfile()">الملف الشخصي</button>
+  </header>
+
+  <div class="chat-container" id="chat">
+    <!-- الرسائل الحية ستظهر هنا -->
+  </div>
+
+  <div class="chat-input">
+    <input type="text" id="messageInput" placeholder="اكتب رسالة...">
+    <button onclick="sendMessage()">إرسال</button>
+  </div>
+
+  <button class="add-btn" onclick="addPerson()">+</button>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import Firebase SDK
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    // Firebase config (غيّر هذه المعلومات حسب مشروعك)
+    const firebaseConfig = {
+      apiKey: "AIzaSyCoLrZOjyIn_KbSMP35RAPzlnCpNQzfPl4",
+      authDomain: "red-talk-2a888.firebaseapp.com",
+      projectId: "red-talk-2a888",
+      storageBucket: "red-talk-2a888.appspot.com",
+      messagingSenderId: "1021072763609",
+      appId: "1:1021072763609:web:cacfa338c3e5d40b25caae"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const chatContainer = document.getElementById("chat");
+    const messageInput = document.getElementById("messageInput");
+
+    // إرسال رسالة
+    async function sendMessage() {
+      const msg = messageInput.value.trim();
+      if (msg === "") return;
+
+      await addDoc(collection(db, "messages"), {
+        text: msg,
+        from: "me", // لاحقًا يمكن ربطها بالمستخدم
+        createdAt: serverTimestamp()
+      });
+
+      messageInput.value = "";
+    }
+
+    // عرض الرسائل مباشرة
+    const q = query(collection(db, "messages"), orderBy("createdAt"));
+    onSnapshot(q, (snapshot) => {
+      chatContainer.innerHTML = "";
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const div = document.createElement("div");
+        div.className = "message " + (data.from === "me" ? "from-me" : "from-them");
+        div.textContent = data.text;
+        chatContainer.appendChild(div);
+      });
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    });
+
+    function openProfile() {
+      alert("سيتم فتح الملف الشخصي قريباً 🔧");
+    }
+
+    function addPerson() {
+      alert("ميزة إضافة شخص ستتوفر قريباً ✨");
+    }
+  </script>
+
+</body>
+</html>

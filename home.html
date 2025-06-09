@@ -13,7 +13,7 @@
       box-sizing: border-box;
     }
     body {
-      background-color: #f9fafb;
+      background: linear-gradient(135deg, #e0e7ff, #f3f4f6);
       display: flex;
       flex-direction: column;
       height: 100vh;
@@ -27,29 +27,58 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 3px 6px rgba(30, 64, 175, 0.3);
+      box-shadow: 0 3px 10px rgba(30, 64, 175, 0.4);
       user-select: none;
+      position: relative;
     }
     header h2 {
       font-size: 1.75rem;
       font-weight: 700;
       letter-spacing: 1px;
+      user-select: none;
     }
     .profile-btn {
-      background-color: #3b82f6;
+      background: transparent;
       border: none;
-      color: white;
-      padding: 0.5rem 1.25rem;
-      border-radius: 9999px;
       cursor: pointer;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: background-color 0.3s ease;
-      box-shadow: 0 4px 6px rgba(59, 130, 246, 0.5);
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: color 0.3s ease;
     }
     .profile-btn:hover {
-      background-color: #2563eb;
-      box-shadow: 0 6px 12px rgba(37, 99, 235, 0.6);
+      color: #93c5fd;
+    }
+    .profile-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: currentColor;
+      transition: transform 0.3s ease;
+    }
+    .profile-btn:hover svg {
+      transform: rotate(15deg);
+    }
+    .tooltip {
+      position: absolute;
+      bottom: -30px;
+      right: 0;
+      background: #2563eb;
+      color: white;
+      padding: 4px 10px;
+      font-size: 0.85rem;
+      border-radius: 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      white-space: nowrap;
+    }
+    .profile-btn:hover .tooltip {
+      opacity: 1;
+      pointer-events: auto;
     }
     .chat-container {
       flex: 1;
@@ -59,6 +88,8 @@
       flex-direction: column;
       gap: 0.75rem;
       background: white;
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 8px 25px rgba(30, 64, 175, 0.1);
       scrollbar-width: thin;
       scrollbar-color: #3b82f6 transparent;
     }
@@ -69,13 +100,21 @@
       background-color: #3b82f6;
       border-radius: 4px;
     }
+    .welcome-msg {
+      font-weight: 600;
+      color: #3b82f6;
+      font-size: 1.1rem;
+      text-align: center;
+      margin-bottom: 10px;
+      user-select: none;
+    }
     .message {
       max-width: 70%;
       padding: 0.75rem 1.25rem;
       border-radius: 1.25rem;
       font-size: 1rem;
       line-height: 1.4;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
       word-wrap: break-word;
       white-space: pre-wrap;
       user-select: text;
@@ -86,18 +125,20 @@
       color: white;
       align-self: flex-end;
       border-bottom-right-radius: 0;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.5);
     }
     .from-them {
       background-color: #e0e7ff;
       color: #1e40af;
       align-self: flex-start;
       border-bottom-left-radius: 0;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
     }
     .add-btn {
       position: fixed;
       bottom: 90px;
       left: 20px;
-      background-color: #10b981;
+      background: linear-gradient(135deg, #10b981, #059669);
       color: white;
       border: none;
       border-radius: 50%;
@@ -105,24 +146,29 @@
       height: 56px;
       font-size: 2.5rem;
       cursor: pointer;
-      box-shadow: 0 6px 15px rgba(16, 185, 129, 0.6);
-      transition: background-color 0.3s ease, transform 0.2s ease;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.8);
+      transition: background-color 0.3s ease, transform 0.25s ease;
       user-select: none;
       display: flex;
       justify-content: center;
       align-items: center;
       line-height: 1;
+      z-index: 100;
     }
     .add-btn:hover {
-      background-color: #059669;
+      background: linear-gradient(135deg, #059669, #047857);
       transform: scale(1.1);
+    }
+    .add-btn:active {
+      transform: scale(0.95);
     }
     .chat-input {
       display: flex;
-      padding: 0.75rem 1.5rem;
+      padding: 0.85rem 1.5rem;
       background: white;
       border-top: 1px solid #ddd;
-      box-shadow: 0 -3px 6px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.05);
+      user-select: none;
     }
     .chat-input input {
       flex: 1;
@@ -132,11 +178,12 @@
       margin-right: 0.75rem;
       font-size: 1rem;
       transition: border-color 0.3s ease;
+      user-select: text;
     }
     .chat-input input:focus {
       outline: none;
       border-color: #3b82f6;
-      box-shadow: 0 0 5px #3b82f6;
+      box-shadow: 0 0 6px #3b82f6;
     }
     .chat-input button {
       padding: 0.85rem 1.5rem;
@@ -147,7 +194,7 @@
       cursor: pointer;
       font-weight: 600;
       font-size: 1rem;
-      box-shadow: 0 4px 6px rgba(59, 130, 246, 0.5);
+      box-shadow: 0 4px 10px rgba(59, 130, 246, 0.6);
       transition: background-color 0.3s ease, transform 0.15s ease;
       user-select: none;
     }
@@ -158,80 +205,44 @@
     .chat-input button:active {
       transform: scale(0.95);
     }
+    /* Popup box for add-btn */
+    .popup-menu {
+      position: fixed;
+      bottom: 160px;
+      left: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+      padding: 10px 0;
+      width: 180px;
+      z-index: 200;
+      display: none;
+      flex-direction: column;
+      user-select: none;
+    }
+    .popup-menu.visible {
+      display: flex;
+    }
+    .popup-menu button {
+      background: none;
+      border: none;
+      padding: 10px 20px;
+      text-align: right;
+      font-size: 1rem;
+      color: #1f2937;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    .popup-menu button:hover {
+      background-color: #e0e7ff;
+    }
   </style>
 </head>
 <body>
 
   <header>
     <h2>RED TALK</h2>
-    <button class="profile-btn" onclick="location.href='profile.html'">الملف الشخصي</button>
-  </header>
-
-  <div class="chat-container" id="chat">
-    <!-- رسائل الشات تظهر هنا -->
-  </div>
-
-  <div class="chat-input">
-    <input type="text" id="messageInput" placeholder="اكتب رسالة..." autocomplete="off" />
-    <button onclick="sendMessage()">إرسال</button>
-  </div>
-
-  <button class="add-btn" title="إضافة شخص" onclick="addPerson()">+</button>
-
-  <!-- Firebase SDK -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCoLrZOjyIn_KbSMP35RAPzlnCpNQzfPl4",
-      authDomain: "red-talk-2a888.firebaseapp.com",
-      projectId: "red-talk-2a888",
-      storageBucket: "red-talk-2a888.appspot.com",
-      messagingSenderId: "1021072763609",
-      appId: "1:1021072763609:web:cacfa338c3e5d40b25caae"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    const chatContainer = document.getElementById("chat");
-    const messageInput = document.getElementById("messageInput");
-
-    async function sendMessage() {
-      const msg = messageInput.value.trim();
-      if (!msg) return;
-
-      try {
-        await addDoc(collection(db, "messages"), {
-          text: msg,
-          from: "me",
-          createdAt: serverTimestamp()
-        });
-        messageInput.value = "";
-      } catch (error) {
-        alert("حدث خطأ أثناء إرسال الرسالة.");
-        console.error(error);
-      }
-    }
-
-    const q = query(collection(db, "messages"), orderBy("createdAt"));
-    onSnapshot(q, (snapshot) => {
-      chatContainer.innerHTML = "";
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const msgDiv = document.createElement("div");
-        msgDiv.className = "message " + (data.from === "me" ? "from-me" : "from-them");
-        msgDiv.textContent = data.text;
-        chatContainer.appendChild(msgDiv);
-      });
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-    });
-
-    function addPerson() {
-      alert("ميزة إضافة شخص ستتوفر قريباً إن شاء الله!");
-    }
-  </script>
-
-</body>
-</html>
+    <button class="profile-btn" onclick="location.href='profile.html'" aria-label="الملف الشخصي">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M5.121 17.804A9 9 0 1117.803 5.122 9 9 0 015.121 17.804zM12 12a4 4 0 100-8 4 4 0 000 8z

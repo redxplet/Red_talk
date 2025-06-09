@@ -2,9 +2,9 @@
 <html lang="ar">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>إنشاء حساب - RED TALK</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -12,106 +12,103 @@
       margin: 0;
       padding: 0;
     }
+
     body {
       background: linear-gradient(135deg, #3b82f6, #9333ea);
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: white;
       padding: 1rem;
     }
+
     .container {
-      background: #111827;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      background-color: #1e293b;
+      color: white;
       padding: 2rem;
+      border-radius: 1rem;
       width: 100%;
-      max-width: 380px;
+      max-width: 400px;
       text-align: center;
-      animation: fadeIn 0.8s ease forwards;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 1s ease;
     }
+
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
+
     h1 {
-      margin-bottom: 1.8rem;
-      font-weight: 700;
-      font-size: 2rem;
-      color: #f9fafb;
-      letter-spacing: 0.04em;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
     }
+
     input {
       width: 100%;
-      padding: 12px 14px;
-      margin-bottom: 1.2rem;
-      border-radius: 8px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
       border: none;
+      border-radius: 0.5rem;
       font-size: 1rem;
-      outline: none;
-      transition: box-shadow 0.3s ease;
-    }
-    input:focus {
-      box-shadow: 0 0 8px #3b82f6;
-      background-color: #1f2937;
+      background-color: #334155;
       color: white;
     }
+
+    input:focus {
+      background-color: #475569;
+      outline: none;
+    }
+
     button {
       width: 100%;
-      padding: 12px 0;
-      border-radius: 8px;
-      border: none;
       background-color: #3b82f6;
-      font-weight: 700;
-      font-size: 1.1rem;
       color: white;
+      padding: 0.75rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 0.5rem;
       cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-      user-select: none;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
     }
+
     button:hover {
       background-color: #2563eb;
-      transform: scale(1.03);
     }
-    button:active {
-      transform: scale(0.97);
-    }
-    #message {
+
+    .message {
       margin-top: 1rem;
-      min-height: 1.4rem;
-      font-weight: 600;
+      font-weight: bold;
+      min-height: 1.5rem;
     }
-    .login-text {
-      margin-top: 1.4rem;
+
+    .login-link {
+      margin-top: 1.2rem;
       font-size: 0.95rem;
     }
-    .login-text a {
+
+    .login-link a {
       color: #60a5fa;
-      font-weight: 700;
       text-decoration: none;
-      transition: text-decoration 0.2s ease;
+      font-weight: bold;
     }
-    .login-text a:hover {
+
+    .login-link a:hover {
       text-decoration: underline;
     }
   </style>
 </head>
 <body>
-
   <div class="container">
-    <h1>إنشاء حساب - RED TALK</h1>
-    <input type="email" id="email" placeholder="البريد الإلكتروني" autocomplete="email" required />
-    <input type="password" id="password" placeholder="كلمة المرور" autocomplete="new-password" required />
-    <button id="registerBtn">إنشاء حساب</button>
-    <div id="message"></div>
-    <p class="login-text">لديك حساب؟ <a href="index.html">تسجيل الدخول</a></p>
+    <h1>إنشاء حساب</h1>
+    <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+    <input type="password" id="password" placeholder="كلمة المرور" required>
+    <button onclick="registerUser()">إنشاء حساب</button>
+    <div class="message" id="message"></div>
+    <div class="login-link">
+      لديك حساب؟ <a href="home.html">تسجيل الدخول</a>
+    </div>
   </div>
 
   <script type="module">
@@ -121,7 +118,6 @@
     const firebaseConfig = {
       apiKey: "AIzaSyCoLrZOjyIn_KbSMP35RAPzlnCpNQzfPl4",
       authDomain: "red-talk-2a888.firebaseapp.com",
-      databaseURL: "https://red-talk-2a888-default-rtdb.firebaseio.com",
       projectId: "red-talk-2a888",
       storageBucket: "red-talk-2a888.appspot.com",
       messagingSenderId: "1234567890",
@@ -131,45 +127,38 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const registerBtn = document.getElementById('registerBtn');
-    const messageDiv = document.getElementById('message');
+    window.registerUser = async function () {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const message = document.getElementById("message");
 
-    registerBtn.addEventListener('click', async () => {
-      const email = emailInput.value.trim();
-      const password = passwordInput.value.trim();
-
-      messageDiv.textContent = '';
-      messageDiv.style.color = 'white';
+      message.style.color = "white";
+      message.textContent = "";
 
       if (!email || !password) {
-        messageDiv.style.color = '#ef4444';
-        messageDiv.textContent = 'يرجى ملء البريد الإلكتروني وكلمة المرور';
+        message.style.color = "#f87171";
+        message.textContent = "يرجى ملء جميع الحقول.";
         return;
       }
 
       try {
         await createUserWithEmailAndPassword(auth, email, password);
-        messageDiv.style.color = '#10b981';
-        messageDiv.textContent = 'تم إنشاء الحساب بنجاح! جاري التحويل...';
+        message.style.color = "#10b981";
+        message.textContent = "تم إنشاء الحساب بنجاح!";
         setTimeout(() => {
-          window.location.href = 'index.html';
-        }, 2000);
+          window.location.href = "signin.html";
+        }, 1000);
       } catch (error) {
-        messageDiv.style.color = '#ef4444';
-        if (error.code === 'auth/email-already-in-use') {
-          messageDiv.textContent = 'البريد الإلكتروني مستخدم مسبقاً';
-        } else if (error.code === 'auth/invalid-email') {
-          messageDiv.textContent = 'البريد الإلكتروني غير صالح';
-        } else if (error.code === 'auth/weak-password') {
-          messageDiv.textContent = 'كلمة المرور ضعيفة جداً';
+        message.style.color = "#f87171";
+        if (error.code === "auth/email-already-in-use") {
+          message.textContent = "هذا البريد مستخدم بالفعل.";
+        } else if (error.code === "auth/weak-password") {
+          message.textContent = "كلمة المرور ضعيفة جداً.";
         } else {
-          messageDiv.textContent = 'حدث خطأ: ' + error.message;
+          message.textContent = "حدث خطأ: " + error.message;
         }
       }
-    });
+    };
   </script>
-
 </body>
 </html>

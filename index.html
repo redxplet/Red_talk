@@ -1,186 +1,42 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>تسجيل الدخول - RED TALK</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Cairo', sans-serif;
-      margin: 0;
-      padding: 0;
+import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const db = getFirestore(app);
+
+window.loginUser = async function () {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const rememberMe = document.getElementById("rememberMe").checked;
+  const message = document.getElementById("message");
+
+  message.style.color = "white";
+  message.textContent = "";
+
+  const persistence = rememberMe ? browserLocalPersistence : browserSessionPersistence;
+
+  try {
+    await setPersistence(auth, persistence);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+
+    // جلب رمز المستخدم من Firestore
+    const q = query(collection(db, "users"), where("uid", "==", userCredential.user.uid));
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      const userData = querySnapshot.docs[0].data();
+      console.log("رمز المستخدم:", userData.code);
+      message.textContent = `تم تسجيل الدخول! رمزك: ${userData.code}`;
     }
 
-    body {
-      background: linear-gradient(135deg, #9333ea, #3b82f6);
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 1rem;
+    message.style.color = "#10b981";
+    setTimeout(() => {
+      window.location.href = "home.html";
+    }, 1500);
+
+  } catch (error) {
+    message.style.color = "#f87171";
+    if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
+      message.textContent = "البريد أو كلمة المرور غير صحيحة.";
+    } else {
+      message.textContent = "حدث خطأ: " + error.message;
     }
-
-    .container {
-      background-color: #1e293b;
-      color: white;
-      padding: 2rem;
-      border-radius: 1rem;
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-      animation: fadeIn 1s ease;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 1.5rem;
-    }
-
-    input[type="email"],
-    input[type="password"] {
-      width: 100%;
-      padding: 0.75rem;
-      margin-bottom: 1rem;
-      border: none;
-      border-radius: 0.5rem;
-      font-size: 1rem;
-      background-color: #334155;
-      color: white;
-    }
-
-    input:focus {
-      background-color: #475569;
-      outline: none;
-    }
-
-    .remember {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-    }
-
-    .remember input {
-      margin-right: 0.5rem;
-      transform: scale(1.2);
-    }
-
-    button {
-      width: 100%;
-      background-color: #9333ea;
-      color: white;
-      padding: 0.75rem;
-      font-size: 1rem;
-      border: none;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-      background-color: #7e22ce;
-    }
-
-    .message {
-      margin-top: 1rem;
-      font-weight: bold;
-      min-height: 1.5rem;
-    }
-
-    .signup-link {
-      margin-top: 1.2rem;
-      font-size: 0.95rem;
-    }
-
-    .signup-link a {
-      color: #60a5fa;
-      text-decoration: none;
-      font-weight: bold;
-    }
-
-    .signup-link a:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>تسجيل الدخول</h1>
-    <input type="email" id="email" placeholder="البريد الإلكتروني" required>
-    <input type="password" id="password" placeholder="كلمة المرور" required>
-    
-    <div class="remember">
-      <input type="checkbox" id="rememberMe">
-      <label for="rememberMe">تذكرني</label>
-    </div>
-
-    <button onclick="loginUser()">تسجيل الدخول</button>
-    <div class="message" id="message"></div>
-    <div class="signup-link">
-      لا تملك حسابًا؟ <a href="signup.html">إنشاء حساب</a>
-    </div>
-  </div>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import {
-      getAuth,
-      signInWithEmailAndPassword,
-      setPersistence,
-      browserLocalPersistence,
-      browserSessionPersistence
-    } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyCoLrZOjyIn_KbSMP35RAPzlnCpNQzfPl4",
-      authDomain: "red-talk-2a888.firebaseapp.com",
-      projectId: "red-talk-2a888",
-      storageBucket: "red-talk-2a888.appspot.com",
-      messagingSenderId: "1234567890",
-      appId: "1:1234567890:web:abcdef123456"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    window.loginUser = async function () {
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const rememberMe = document.getElementById("rememberMe").checked;
-      const message = document.getElementById("message");
-
-      message.style.color = "white";
-      message.textContent = "";
-
-      const persistence = rememberMe ? browserLocalPersistence : browserSessionPersistence;
-
-      try {
-        await setPersistence(auth, persistence);
-        await signInWithEmailAndPassword(auth, email, password);
-        message.style.color = "#10b981";
-        message.textContent = "تم تسجيل الدخول بنجاح!";
-        setTimeout(() => {
-          window.location.href = "home.html";
-        }, 1000);
-      } catch (error) {
-        message.style.color = "#f87171";
-        if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
-          message.textContent = "البريد أو كلمة المرور غير صحيحة.";
-        } else {
-          message.textContent = "حدث خطأ: " + error.message;
-        }
-      }
-    };
-  </script>
-</body>
-</html>
+  }
+};
